@@ -1,0 +1,250 @@
+\documentclass[a4paper,landscape]{article}
+\usepackage[margin=15mm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{patterns}
+\usetikzlibrary{decorations.pathmorphing}
+
+\begin{document}
+
+% ============================================
+% PARAMETER DEFINITIONS
+% ============================================
+\def\scalefactor{0.08}  % Scale factor for drawing
+
+% Outboard dimensions
+\def\Lout{2000}         % Total outboard length [mm]
+\def\Lblade{430}        % Blade length [mm]
+\def\Lshaftout{1570}    % Outboard shaft length [mm]
+
+% Inboard dimensions
+\def\Lin{900}           % Inboard length [mm]
+\def\Lhandle{200}       % Handle total length [mm]
+\def\Lshaftin{700}      % Inboard shaft length [mm]
+
+% Shaft dimensions
+\def\Do{38}             % Shaft outer diameter [mm]
+\def\ts{3}              % Shaft wall thickness [mm]
+
+% Blade dimensions
+\def\bladewidth{150}    % Blade maximum width [mm]
+\def\bladethickness{5}  % Blade thickness [mm]
+\def\bowheight{40}      % Blade bow height (spoon curvature) [mm]
+
+% Sleeve dimensions
+\def\sleevelength{300}  % Total sleeve length [mm]
+\def\sleevenegx{200}    % Sleeve portion in -x direction [mm]
+\def\sleevposx{100}     % Sleeve portion in +x direction [mm]
+\def\sleevediameter{60} % Sleeve diameter [mm]
+
+% Collar dimensions
+\def\collardiameter{120} % Collar diameter [mm]
+\def\collarthickness{20} % Collar thickness [mm]
+
+% Oarlock
+\def\oarlockthickness{20} % Oarlock thickness [mm]
+
+% Handle dimensions
+\def\tapertlength{50}    % Taper length [mm]
+\def\taperdiamstart{38}  % Taper start diameter [mm]
+\def\taperdiamend{30}    % Taper end diameter [mm]
+\def\gripdiameter{35}    % Grip diameter [mm]
+\def\griplength{150}     % Grip length [mm]
+
+% Beam dimensions
+\def\Lb{100}             % Beam length [mm]
+\def\hb{2}               % Beam height [mm]
+\def\xb{200}             % Beam root position [mm]
+\pgfmathsetmacro{\yb}{\Do/2 + 20}  % Beam neutral axis eccentricity [mm]
+
+% ============================================
+% COMPUTED COORDINATES
+% ============================================
+\pgfmathsetmacro{\xbladetip}{-\Lout}
+\pgfmathsetmacro{\xbladeshaft}{-\Lshaftout}
+\pgfmathsetmacro{\xoarlock}{0}
+\pgfmathsetmacro{\xcollar}{\oarlockthickness}
+\pgfmathsetmacro{\xhandleend}{\Lin}
+\pgfmathsetmacro{\xsleevestart}{-\sleevenegx}
+\pgfmathsetmacro{\xsleeveend}{\sleevposx}
+\pgfmathsetmacro{\xtaperstart}{\Lin - \Lhandle}
+\pgfmathsetmacro{\xtaperend}{\xtaperstart + \tapertlength}
+\pgfmathsetmacro{\xgripend}{\Lin}
+
+% Center of outboard shaft for clamped label
+\pgfmathsetmacro{\xclampedcenter}{(\xbladeshaft + \xsleevestart)/2}
+
+% ============================================
+% TIKZ DRAWING
+% ============================================
+\begin{center}
+\begin{tikzpicture}[x=\scalefactor mm, y=\scalefactor mm]
+
+% Reference line (centerline)
+\draw[gray, very thin, dashed] (\xbladetip,0) -- (\xhandleend,0);
+
+% ============================================
+% BLADE (bowed/spoon shape, curving downward)
+% ============================================
+\filldraw[fill=blue!20, draw=blue!50!black, thick] 
+    (\xbladetip, -\bladethickness/2) 
+    .. controls (\xbladetip + \Lblade/3, -\bowheight - \bladethickness/2) 
+       and (\xbladetip + 2*\Lblade/3, -\bowheight - \bladethickness/2) .. 
+    (\xbladeshaft, -\bladethickness/2)
+    -- (\xbladeshaft, \bladethickness/2)
+    .. controls (\xbladetip + 2*\Lblade/3, -\bowheight + \bladethickness/2) 
+       and (\xbladetip + \Lblade/3, -\bowheight + \bladethickness/2) .. 
+    (\xbladetip, \bladethickness/2)
+    -- cycle;
+
+% ============================================
+% OUTBOARD SHAFT
+% ============================================
+\filldraw[fill=gray!30, draw=black] 
+    (\xbladeshaft, -\Do/2) rectangle (\xsleevestart, \Do/2);
+
+% ============================================
+% INBOARD SHAFT
+% ============================================
+\filldraw[fill=gray!30, draw=black] 
+    (\xoarlock+\oarlockthickness, -\Do/2) rectangle (\xtaperstart, \Do/2);
+
+% ============================================
+% HANDLE - TAPER
+% ============================================
+\filldraw[fill=brown!30, draw=brown!70!black, thick]
+    (\xtaperstart, -\taperdiamstart/2) -- 
+    (\xtaperend, -\taperdiamend/2) -- 
+    (\xtaperend, \taperdiamend/2) -- 
+    (\xtaperstart, \taperdiamstart/2) -- 
+    cycle;
+
+% ============================================
+% HANDLE - GRIP
+% ============================================
+\filldraw[fill=brown!50, draw=brown!70!black, thick]
+    (\xtaperend, -\gripdiameter/2) rectangle (\xgripend, \gripdiameter/2);
+
+% ============================================
+% BEAM
+% ============================================
+\filldraw[fill=green!20, draw=green!60!black, thick]
+    (\xb, \yb - \hb/2) rectangle (\xb + \Lb, \yb + \hb/2);
+
+% Beam clamps
+\draw[black, thick] (\xb, \yb - \hb/2) -- (\xb, \Do/2);
+\draw[black, thick] (\xb + \Lb, \yb - \hb/2) -- (\xb + \Lb, \Do/2);
+
+% ============================================
+% SLEEVE (ON FOREGROUND)
+% ============================================
+\filldraw[fill=orange!30, draw=orange!70!black, thick] 
+    (\xsleevestart, -\sleevediameter/2) rectangle (\xsleeveend, \sleevediameter/2);
+
+% ============================================
+% OARLOCK (ON FOREGROUND) - with clamped pattern
+% ============================================
+\filldraw[fill=red!40, draw=red!70!black, very thick] 
+    (0, -80) rectangle (\oarlockthickness, 80);
+
+% ============================================
+% CLAMPED BOUNDARY CONDITION at x=0
+% ============================================
+% Ground/fixed support pattern
+\fill[pattern=north east lines, pattern color=black] (-50, -100) rectangle (0, -80);
+\draw[very thick] (0, -100) -- (0, -80);
+\fill[pattern=north east lines, pattern color=black] (-50, 80) rectangle (0, 100);
+\draw[very thick] (0, 80) -- (0, 100);
+
+% Label for clamped condition
+\node[anchor=south, font=\bfseries, red!70!black] at (\xclampedcenter, \Do/2 + 5) {Clamped};
+\node[anchor=north, font=\small] at (\xclampedcenter, -\Do/2 - 5) {$x \leq 0$};
+
+% ============================================
+% COLLAR (ON FOREGROUND)
+% ============================================
+\filldraw[fill=yellow!40, draw=orange!70!black, thick] 
+    (\xcollar, -\collardiameter/2) rectangle (\xcollar+\collarthickness, \collardiameter/2);
+
+% ============================================
+% APPLIED FORCE at x=xF
+% ============================================
+% Force arrow (twice as long)
+\draw[->, >=latex, line width=3pt, blue!70!black] (\xhandleend, 0) -- (\xhandleend, -240) node[midway, left, font=\Large\bfseries] {$F$};
+
+% Force application point marker
+\filldraw[blue!70!black] (\xhandleend, 0) circle (3pt);
+
+% Label for force position
+\node[anchor=north, font=\bfseries, blue!70!black] at (\xhandleend, -250) {Applied Force};
+
+% ============================================
+% COORDINATE AXES (ON FOREGROUND)
+% ============================================
+% X-axis
+\draw[->, >=stealth, thick, dashed, gray] (\xbladetip - 100, 0) -- (\xhandleend + 200, 0) node[right] {$x$};
+% Y-axis
+\draw[->, >=stealth, thick, dashed, gray] (0, -300) -- (0, 200) node[above] {$y$};
+
+% Origin marker
+\draw[very thick, black] (0, -10) -- (0, 10);
+\node[below] at (0, -15) {$0$};
+
+% xF marker (at same height as x=0)
+\draw[very thick] (\xhandleend, -10) -- (\xhandleend, 10);
+\node[right] at (\xhandleend + 20, -15) {$x_F$};
+
+% xb marker (beam root)
+\draw[very thick] (\xb, -10) -- (\xb, 10);
+\node[below] at (\xb, -15) {$x_b$};
+
+% xb+Lb marker (beam tip)
+\draw[very thick] (\xb + \Lb, -10) -- (\xb + \Lb, 10);
+\node[below] at (\xb + \Lb, -15) {$x_b + L_b$};
+
+% Title
+\node[anchor=north, font=\Large\bfseries] at (0, 400) {Theory 1: Boundary Conditions};
+\node[anchor=north, font=\large] at (0, 350) {Force at Handle, Clamped at Oarlock};
+
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+% BOUNDARY CONDITIONS TABLE
+% ============================================
+\section*{Boundary Conditions - Theory 1}
+
+\subsection*{Description}
+A vertical force $F$ is applied at the handle end ($x = x_F = 900$ mm). The oar is clamped at the oarlock position for all $x \leq 0$.
+
+\subsection*{Mathematical Formulation}
+
+\begin{tabular}{lll}
+\hline
+\textbf{Location} & \textbf{Condition} & \textbf{Description} \\
+\hline
+$x = x_F$ & $V(x_F) = -F$ & Applied force (shear force) \\
+$x = x_F$ & $M(x_F) = 0$ & Free end (no moment) \\
+\hline
+$x = 0$ & $w(0) = 0$ & No vertical displacement \\
+$x = 0$ & $\theta(0) = 0$ & No rotation (clamped) \\
+\hline
+$x \leq 0$ & Fixed & Clamped region \\
+\hline
+\end{tabular}
+
+\vspace{5mm}
+\noindent where:
+\begin{itemize}
+\item $F$ = applied vertical force at handle [N]
+\item $V(x)$ = shear force at position $x$ [N]
+\item $M(x)$ = bending moment at position $x$ [N·mm]
+\item $w(x)$ = vertical deflection at position $x$ [mm]
+\item $\theta(x)$ = rotation angle at position $x$ [rad]
+\item $x_F = 900$ mm = handle position
+\end{itemize}
+
+\vspace{5mm}
+\noindent\textbf{Author:} Sylvain Boyer (Mecafrog.com)
+
+\end{document}

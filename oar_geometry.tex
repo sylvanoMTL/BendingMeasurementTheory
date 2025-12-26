@@ -1,0 +1,228 @@
+\documentclass[a4paper,landscape]{article}
+\usepackage[margin=15mm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\begin{document}
+
+% ============================================
+% PARAMETER DEFINITIONS
+% ============================================
+\def\scalefactor{0.08}  % Scale factor for drawing (adjust to fit A4)
+
+% Outboard dimensions
+\def\Lout{2000}         % Total outboard length [mm]
+\def\Lblade{430}        % Blade length [mm]
+\def\Lshaftout{1570}    % Outboard shaft length [mm]
+
+% Inboard dimensions
+\def\Lin{900}           % Inboard length [mm]
+\def\Lhandle{200}       % Handle total length [mm]
+\def\Lshaftin{700}      % Inboard shaft length [mm]
+
+% Shaft dimensions
+\def\Do{38}             % Shaft outer diameter [mm]
+\def\ts{3}              % Shaft wall thickness [mm]
+
+% Blade dimensions
+\def\bladewidth{150}    % Blade maximum width [mm]
+\def\bladethickness{5}  % Blade thickness [mm] (not shown in top view)
+\def\bowheight{40}      % Blade bow height (spoon curvature) [mm]
+
+% Sleeve dimensions
+\def\sleevelength{300}  % Total sleeve length [mm]
+\def\sleevenegx{200}    % Sleeve portion in -x direction [mm]
+\def\sleevposx{100}     % Sleeve portion in +x direction [mm]
+\def\sleevediameter{60} % Sleeve diameter [mm]
+
+% Collar dimensions
+\def\collardiameter{120} % Collar diameter [mm]
+\def\collarthickness{20} % Collar thickness [mm]
+
+% Oarlock
+\def\oarlockthickness{20} % Oarlock thickness [mm]
+
+% Handle dimensions
+\def\tapertlength{50}    % Taper length [mm]
+\def\taperdiamstart{38}  % Taper start diameter (=Do) [mm]
+\def\taperdiamend{30}    % Taper end diameter [mm]
+\def\gripdiameter{35}    % Grip diameter [mm]
+\def\griplength{150}     % Grip length [mm]
+
+% ============================================
+% COMPUTED COORDINATES (in mm, then scaled)
+% ============================================
+\pgfmathsetmacro{\xbladetip}{-\Lout}
+\pgfmathsetmacro{\xbladeshaft}{-\Lshaftout}
+\pgfmathsetmacro{\xoarlock}{0}
+\pgfmathsetmacro{\xcollar}{\oarlockthickness}
+\pgfmathsetmacro{\xhandleend}{\Lin}
+\pgfmathsetmacro{\xsleevestart}{-\sleevenegx}
+\pgfmathsetmacro{\xsleeveend}{\sleevposx}
+\pgfmathsetmacro{\xtaperstart}{\Lin - \Lhandle}
+\pgfmathsetmacro{\xtaperend}{\xtaperstart + \tapertlength}
+\pgfmathsetmacro{\xgripend}{\Lin}
+
+% ============================================
+% TIKZ DRAWING
+% ============================================
+\begin{center}
+\begin{tikzpicture}[x=\scalefactor mm, y=\scalefactor mm]
+
+% Reference line (centerline) - will be covered by axes later
+\draw[gray, very thin, dashed] (\xbladetip,0) -- (\xhandleend,0);
+
+% ============================================
+% BLADE (bowed/spoon shape, curving downward)
+% ============================================
+\filldraw[fill=blue!20, draw=blue!50!black, thick] 
+    (\xbladetip, -\bladethickness/2) 
+    .. controls (\xbladetip + \Lblade/3, -\bowheight - \bladethickness/2) 
+       and (\xbladetip + 2*\Lblade/3, -\bowheight - \bladethickness/2) .. 
+    (\xbladeshaft, -\bladethickness/2)
+    -- (\xbladeshaft, \bladethickness/2)
+    .. controls (\xbladetip + 2*\Lblade/3, -\bowheight + \bladethickness/2) 
+       and (\xbladetip + \Lblade/3, -\bowheight + \bladethickness/2) .. 
+    (\xbladetip, \bladethickness/2)
+    -- cycle;
+
+% ============================================
+% OUTBOARD SHAFT
+% ============================================
+\filldraw[fill=gray!30, draw=black] 
+    (\xbladeshaft, -\Do/2) rectangle (\xsleevestart, \Do/2);
+
+% ============================================
+% INBOARD SHAFT
+% ============================================
+\filldraw[fill=gray!30, draw=black] 
+    (\xoarlock+\oarlockthickness, -\Do/2) rectangle (\xtaperstart, \Do/2);
+
+% ============================================
+% HANDLE - TAPER
+% ============================================
+\filldraw[fill=brown!30, draw=brown!70!black, thick]
+    (\xtaperstart, -\taperdiamstart/2) -- 
+    (\xtaperend, -\taperdiamend/2) -- 
+    (\xtaperend, \taperdiamend/2) -- 
+    (\xtaperstart, \taperdiamstart/2) -- 
+    cycle;
+
+% ============================================
+% HANDLE - GRIP
+% ============================================
+\filldraw[fill=brown!50, draw=brown!70!black, thick]
+    (\xtaperend, -\gripdiameter/2) rectangle (\xgripend, \gripdiameter/2);
+
+% ============================================
+% DIMENSION ARROWS AND LABELS
+% ============================================
+
+% Total outboard (Lout) - below the drawing with more space
+\draw[<->, >=stealth, thick, blue] 
+    (\xbladetip, -180) -- (\xoarlock, -180) 
+    node[midway, below, fill=white] {$L_{\text{out}} = 2000$ mm};
+
+% Blade length (Lblade) - below Lout with more space
+\draw[<->, >=stealth, thick, blue] 
+    (\xbladetip, -220) -- (\xbladeshaft, -220) 
+    node[midway, below, fill=white, font=\small] {$L_{\text{blade}} = 430$ mm};
+
+% Inboard length (Lin) - aligned with Lout
+\draw[<->, >=stealth, thick, red] 
+    (\xoarlock, -180) -- (\xhandleend, -180) 
+    node[midway, below, fill=white] {$L_{\text{in}} = 900$ mm};
+
+% Component labels with arrows (positioned diagonally)
+% Blade - down-left diagonal
+\draw[-] (\xbladetip + \Lblade/2, -\bowheight - \bladethickness/2) -- (\xbladetip + \Lblade/2 - 80, -\bowheight - \bladethickness/2 - 60);
+\node[anchor=north east, font=\small, blue!70!black] at (\xbladetip + \Lblade/2 - 80, -\bowheight - \bladethickness/2 - 60) {Blade};
+
+% Outboard Shaft - up-right diagonal
+\draw[-] (\xbladeshaft + 400, \Do/2) -- (\xbladeshaft + 480, \Do/2 + 80);
+\node[anchor=south west, font=\small] at (\xbladeshaft + 480, \Do/2 + 80) {Outboard Shaft};
+
+% Sleeve - down-left diagonal
+\draw[-] (\xsleevestart + \sleevelength/2, -\sleevediameter/2) -- (\xsleevestart + \sleevelength/2 - 80, -\sleevediameter/2 - 80);
+\node[anchor=north east, font=\small, orange!70!black] at (\xsleevestart + \sleevelength/2 - 80, -\sleevediameter/2 - 80) {Sleeve};
+
+% Oarlock - up-left diagonal with more spread
+\draw[-] (\oarlockthickness/2, 80) -- (\oarlockthickness/2 - 80, 180);
+\node[anchor=south east, font=\small] at (\oarlockthickness/2 - 80, 180) {Oarlock};
+
+% Collar - up-right diagonal with more spread
+\draw[-] (\xcollar + \collarthickness/2, \collardiameter/2) -- (\xcollar + \collarthickness/2 + 120, \collardiameter/2 + 100);
+\node[anchor=south west, font=\small, orange!70!black] at (\xcollar + \collarthickness/2 + 120, \collardiameter/2 + 100) {Collar};
+
+% Handle - up-right diagonal
+\draw[-] (\xtaperend + \griplength/2, \gripdiameter/2) -- (\xtaperend + \griplength/2 + 80, \gripdiameter/2 + 80);
+\node[anchor=south west, font=\small, brown!70!black] at (\xtaperend + \griplength/2 + 80, \gripdiameter/2 + 80) {Handle};
+
+% ============================================
+% SLEEVE (ON FOREGROUND)
+% ============================================
+\filldraw[fill=orange!30, draw=orange!70!black, thick] 
+    (\xsleevestart, -\sleevediameter/2) rectangle (\xsleeveend, \sleevediameter/2);
+
+% ============================================
+% OARLOCK (ON FOREGROUND)
+% ============================================
+\filldraw[fill=red!40, draw=red!70!black, very thick] 
+    (0, -80) rectangle (\oarlockthickness, 80);
+
+% ============================================
+% COLLAR (ON FOREGROUND)
+% ============================================
+\filldraw[fill=yellow!40, draw=orange!70!black, thick] 
+    (\xcollar, -\collardiameter/2) rectangle (\xcollar+\collarthickness, \collardiameter/2);
+
+% ============================================
+% COORDINATE AXES (ON FOREGROUND)
+% ============================================
+% X-axis (along the oar at y=0)
+\draw[->, >=stealth, thick, dashed, gray] (\xbladetip - 100, 0) -- (\xhandleend + 200, 0) node[right] {$x$};
+% Y-axis (at oarlock position, x=0)
+\draw[->, >=stealth, thick, dashed, gray] (0, -250) -- (0, 200) node[above] {$y$};
+% Origin marker (on foreground)
+\draw[very thick, black] (0, -10) -- (0, 10);
+\node[below] at (0, -15) {$0$};
+% xF marker
+\draw[very thick] (\xhandleend, -10) -- (\xhandleend, 10);
+\node[below] at (\xhandleend, -15) {$x_F$};
+% xBlade marker
+\draw[very thick] (\xbladetip, -10) -- (\xbladetip, 10);
+\node[below] at (\xbladetip, -15) {$x_{\text{blade}}$};
+
+% Title (with more space from figure)
+\node[anchor=north, font=\Large\bfseries] at (0, 400) {Sculling Oar Geometry - Top View};
+
+\end{tikzpicture}
+\end{center}
+
+% ============================================
+% NOMENCLATURE TABLE
+% ============================================
+\section*{Nomenclature}
+
+\begin{tabular}{llr}
+\hline
+\textbf{Symbol} & \textbf{Description} & \textbf{Typical Values of Concept2} \\
+& & \textbf{sculling blade (skinny shaft)} \\
+\hline
+$L_{\text{out}}$ & Total outboard length (blade tip to oarlock) & 2000 mm \\
+$L_{\text{blade}}$ & Blade length & 430 mm \\
+$L_{\text{shaft,out}}$ & Outboard shaft length & 1570 mm \\
+$L_{\text{in}}$ & Inboard length (oarlock to handle end) & 900 mm \\
+$L_{\text{shaft,in}}$ & Inboard shaft length & 700 mm \\
+$L_{\text{handle}}$ & Handle total length & 200 mm \\
+$x_F$ & Handle end position from oarlock & 900 mm \\
+$D_o$ & Shaft outer diameter & 38 mm \\
+$D_i$ & Shaft inner diameter & 32 mm \\
+$t_s$ & Shaft wall thickness & 3 mm \\
+\hline
+\end{tabular}
+
+\vspace{5mm}
+\noindent\textbf{Author:} Sylvain Boyer (Mecafrog.com)
+
+\end{document}

@@ -1,0 +1,75 @@
+\begin{tikzpicture}[scale=0.08]
+
+% BLADE outline
+\draw[thick, blue] 
+    (-2000, -2.5) 
+    .. controls (-1857, -42.5) and (-1713, -42.5) .. 
+    (-1570, -2.5)
+    -- (-1570, 2.5)
+    .. controls (-1713, -37.5) and (-1857, -37.5) .. 
+    (-2000, 2.5)
+    -- cycle;
+
+% OUTBOARD SHAFT
+\draw[thick] (-1570, -19) rectangle (-200, 19);
+
+% INBOARD SHAFT
+\draw[thick] (20, -19) rectangle (700, 19);
+
+% HANDLE - TAPER
+\draw[thick] (700, -19) -- (750, -15) -- (750, 15) -- (700, 19) -- cycle;
+
+% HANDLE - GRIP
+\draw[thick] (750, -17.5) rectangle (900, 17.5);
+
+% BEAM
+\draw[thick, green] (200, 38) rectangle (300, 40);
+
+% Beam clamps
+\draw[thick] (200, 38) -- (200, 19);
+\draw[thick] (300, 38) -- (300, 19);
+
+% SLEEVE
+\draw[thick, orange] (-200, -30) rectangle (100, 30);
+
+% OARLOCK
+\draw[thick, red] (0, -80) rectangle (20, 80);
+
+% COLLAR
+\draw[thick, orange] (20, -60) rectangle (40, 60);
+
+% COORDINATE AXES
+\draw[->, dashed] (-2100, 0) -- (1100, 0);
+\node at (1150, 0) {$x$};
+\draw[->, dashed] (0, -250) -- (0, 200);
+\node at (0, 220) {$y$};
+
+% Origin markers
+\draw (0, -10) -- (0, 10);
+\node at (0, -30) {$0$};
+\draw (900, -10) -- (900, 10);
+\node at (900, -30) {$x_F$};
+\draw (-2000, -10) -- (-2000, 10);
+\node at (-2000, -30) {$x_{blade}$};
+\draw (200, -10) -- (200, 10);
+\node at (200, -30) {$x_b$};
+\draw (300, -10) -- (300, 10);
+\node at (300, -30) {$x_b+L_b$};
+
+% Dimension arrows
+\draw[<->, blue] (-2000, -180) -- (0, -180);
+\node at (-1000, -200) {$L_{out}$};
+
+\draw[<->, red] (0, -180) -- (900, -180);
+\node at (450, -200) {$L_{in}$};
+
+% Labels
+\node at (-1785, -100) {Blade};
+\node at (-800, 80) {Shaft};
+\node at (-50, -90) {Sleeve};
+\node at (-80, 180) {Oarlock};
+\node at (150, 140) {Collar};
+\node at (850, 80) {Handle};
+\node at (310, 90) {Beam};
+
+\end{tikzpicture}

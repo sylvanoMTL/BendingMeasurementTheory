@@ -1,0 +1,134 @@
+\documentclass[a4paper,landscape]{article}
+\usepackage[margin=15mm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows.meta}
+
+\begin{document}
+
+% ============================================
+% PARAMETER DEFINITIONS
+% ============================================
+\def\scalefactor{2.00}  % Scale factor for drawing
+
+% Shaft dimensions
+\def\Do{38}             % Shaft outer diameter [mm]
+\def\Di{32}             % Shaft inner diameter [mm]
+
+% Beam dimensions
+\def\beamwidth{12}      % Beam width (y-direction) [mm]
+\def\beamthickness{2}   % Beam thickness (z-direction) [mm]
+\def\clampheight{10}    % Clamp height [mm]
+\def\clampwidth{12}     % Clamp width (y-direction) [mm]
+
+% Computed positions
+\pgfmathsetmacro{\beamcenterz}{\Do/2 + \clampheight}  % Beam center z-position [mm]
+
+% ============================================
+% TIKZ DRAWING
+% ============================================
+\begin{center}
+\begin{tikzpicture}[x=\scalefactor mm, y=\scalefactor mm]
+
+% ============================================
+% LEFT VIEW: Cross-section at x = xb
+% ============================================
+\begin{scope}[shift={(0,0)}]
+
+% Title
+\node[anchor=south, font=\Large\bfseries] at (0, 40) {Cross-section at $x = x_b$};
+
+
+
+% Shaft - outer circle (without mm units, so it scales with coordinate system)
+\draw[fill=gray!40, draw=black, thick] (0, 0) circle (\Do/2);
+
+% Shaft - inner circle (hollow)
+\draw[fill=white, draw=black, thick] (0, 0) circle (\Di/2);
+
+% Clamp - vertical rectangle connecting shaft to beam
+\draw[fill=green!40, draw=green!60!black, thick] 
+    ({-\clampwidth/2}, {\Do/2}) rectangle ({\clampwidth/2}, {\Do/2 + \clampheight});
+
+% Beam - horizontal rectangle at the top
+\draw[fill=green!20, draw=green!60!black, thick] 
+    ({-\beamwidth/2}, {\beamcenterz - \beamthickness/2}) rectangle ({\beamwidth/2}, {\beamcenterz + \beamthickness/2});
+
+% Labels
+\node[anchor=east, font=\small, green!60!black] at ({-\clampwidth/2 - 1}, {\Do/2 + \clampheight/2}) {Root clamp};
+\node[anchor=east, font=\small, green!60!black] at ({-\beamwidth/2 - 1}, {\beamcenterz }) {Beam};
+
+
+% Origin
+\fill (0, 0) circle (0.5mm);
+\node[anchor=north east, font=\small] at (0, 0) {$0$};
+
+% Y-Z axes (y horizontal, z vertical)
+\draw[->, >=Stealth, thick, gray] (-30, 0) -- (30, 0) node[right] {$y$};
+\draw[->, >=Stealth, thick, gray] (0, -30) -- (0, 35) node[above] {$z$};
+
+\end{scope}
+
+% ============================================
+% RIGHT VIEW: Cross-section at x = xb + Lb
+% ============================================
+\begin{scope}[shift={(70,0)}]
+
+% Title
+\node[anchor=south, font=\Large\bfseries] at (0, 40) {Cross-section at $x = x_b + L_b$};
+
+
+
+% Shaft - outer circle (without mm units, so it scales with coordinate system)
+\draw[fill=gray!40, draw=black, thick] (0, 0) circle (\Do/2);
+
+% Shaft - inner circle (hollow)
+\draw[fill=white, draw=black, thick] (0, 0) circle (\Di/2);
+
+% Define rotation angle
+\def\phiangle{10}  % Rotation angle around x-axis [degrees]
+
+% Beam and clamp - rotated by phi degrees around origin (x-axis rotation)
+\begin{scope}[rotate=\phiangle]
+    % Clamp - vertical rectangle connecting shaft to beam
+    \draw[fill=green!40, draw=green!60!black, thick, dotted] 
+        ({-\clampwidth/2}, {\Do/2}) rectangle ({\clampwidth/2}, {\Do/2 + \clampheight});
+    
+    % Beam - horizontal rectangle at the top
+    \draw[fill=green!20, draw=green!60!black, thick, dotted] 
+        ({-\beamwidth/2}, {\beamcenterz - \beamthickness/2}) rectangle ({\beamwidth/2}, {\beamcenterz + \beamthickness/2});
+    
+    % Labels (positioned relative to rotated elements)
+    \node[anchor=east, font=\small, green!60!black] at ({-\clampwidth/2 - 1}, {\Do/2 + \clampheight/2}) {Tip clamp};
+    \node[anchor=east, font=\small, green!60!black] at ({-\beamwidth/2 - 1}, {\beamcenterz}) {Beam};
+\end{scope}
+
+% Reference lines showing unrotated position (optional, dashed)
+\draw[green!30, dashed, thin] 
+    ({-\clampwidth/2}, {\Do/2}) rectangle ({\clampwidth/2}, {\Do/2 + \clampheight});
+\draw[green!30, dashed, thin] 
+    ({-\beamwidth/2}, {\beamcenterz - \beamthickness/2}) rectangle ({\beamwidth/2}, {\beamcenterz + \beamthickness/2});
+
+% Phi angle indicator at the beam level (showing rotation)
+\draw[->, >=Stealth, thick, red] (0, {\beamcenterz+3}) arc (90:90+\phiangle:40);
+\node[anchor=south west, font=\small, red] at (-5, {\beamcenterz+3}) {$\phi$};
+
+
+% Origin
+\fill (0, 0) circle (0.5mm);
+\node[anchor=north east, font=\small] at (0, 0) {$0$};
+
+% Y-Z axes (y horizontal, z vertical)
+\draw[->, >=Stealth, thick, gray] (-30, 0) -- (30, 0) node[right] {$y$};
+\draw[->, >=Stealth, thick, gray] (0, -30) -- (0, 35) node[above] {$z$};
+
+
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+
+\vspace{5mm}
+\noindent\textbf{Author:} Sylvain Boyer (Mecafrog.com)
+
+\end{document}
