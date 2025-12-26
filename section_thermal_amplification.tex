@@ -1,0 +1,66 @@
+\subsubsection{Thermal Amplification}
+\label{sec:thermal_amplification}
+
+Temperature variations do not only induce direct thermal expansion but also 
+amplify existing imperfections in the measurement system. The resulting thermal 
+effect can be represented as an effective change in both the measurement gain 
+and offset.
+
+The measured strain at temperature $T$ is expressed as:
+\begin{equation}
+\varepsilon_{\mathrm{meas}}(T)
+=
+A_T(T)\,\varepsilon_{\mathrm{mech}}(T_0)
++
+\varepsilon_{\mathrm{offset}}(T)
+\label{eq:thermal_amplification_general}
+\end{equation}
+where:
+\begin{itemize}
+  \item $\varepsilon_{\mathrm{mech}}(T_0)$ is the mechanical bending strain at the reference temperature $T_0$,
+  \item $A_T(T)$ is a dimensionless thermal amplification factor,
+  \item $\varepsilon_{\mathrm{offset}}(T)$ is a temperature-dependent offset
+        caused by assembly pre-stress, twist amplification and differential expansion.
+\end{itemize}
+
+For small excursions around $T_0$, the amplification factor may be linearised as:
+\begin{equation}
+A_T(T)
+\approx
+1 + k_T\,(T - T_0)
+\label{eq:thermal_gain_linear}
+\end{equation}
+where $k_T$ [K$^{-1}$] is an effective thermal amplification coefficient to be obtained from calibration.
+
+The linear approximation in Eq.~\eqref{eq:thermal_gain_linear} assumes that the
+operating temperature remains sufficiently close to the reference temperature
+$T_0$ such that higher–order thermal effects are negligible. This corresponds
+to a first–order Taylor expansion of $A_T(T)$, which is appropriate for modest
+temperature excursions where:
+\begin{equation}
+|T - T_0| \ll \frac{1}{|k_T|}
+\end{equation}
+In the context of this system, the validity of the linear model will be
+verified experimentally during temperature calibration. If significant
+non-linear behaviour is observed, additional higher–order terms in temperature
+may be introduced.
+
+
+
+
+Substituting Eq.~\eqref{eq:thermal_gain_linear} into
+Eq.~\eqref{eq:thermal_amplification_general} gives:
+\begin{equation}
+\varepsilon_{\mathrm{meas}}(T)
+\approx
+\left[1 + k_T\,(T - T_0)\right]\varepsilon_{\mathrm{mech}}(T_0)
++
+\varepsilon_{\mathrm{offset}}(T)
+\label{eq:thermal_amplification_final}
+\end{equation}
+
+Equation~\eqref{eq:thermal_amplification_final} shows that thermal effects act
+as a multiplicative amplification of the mechanical strain measurement
+in addition to an additive temperature-dependent offset.
+Both parameters $k_T$ and $\varepsilon_{\mathrm{offset}}(T)$ 
+must be determined experimentally during calibration.

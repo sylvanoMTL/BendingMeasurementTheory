@@ -1,0 +1,1009 @@
+\documentclass[a4paper]{article}
+\usepackage[margin=20mm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title{Rowing Oar Strain Measurement System\\
+Geometry, Materials, and Specifications}
+\author{Sylvain Boyer\\
+Mecafrog.com}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+% ============================================
+\section{Overview}
+% ============================================
+
+This document provides a complete specification of the geometry, materials, and measurement system for strain measurement on a sculling oar. The primary objective is to evaluate whether the measurement system requires specific considerations for:
+
+\begin{itemize}
+    \item Amplification of strain gauge measurements
+    \item Effects of thermal expansion
+    \item Misalignment of the device on the rowing oar shaft
+    \item Manufacturing imprecision (e.g., beam curvature)
+\end{itemize}
+
+The measurement system consists of a small aluminum beam attached to the carbon fiber oar shaft, instrumented with strain gauges to measure bending during rowing.
+
+% ============================================
+\section{Coordinate System and Sign Conventions}
+% ============================================
+
+\subsection{Coordinate System}
+
+The oar is represented in a top view and described in a right-handed Cartesian coordinate system $(x, y, z)$:
+
+\begin{itemize}
+    \item \textbf{Origin ($x = 0$):} Located at the oarlock position
+    \item \textbf{$x$-axis:} Along the oar longitudinal axis
+    \begin{itemize}
+        \item Positive direction: toward the handle (inboard)
+        \item Negative direction: toward the blade (outboard)
+    \end{itemize}
+    \item \textbf{$y$-axis:} Perpendicular to the oar, in the plane of bending
+    \begin{itemize}
+        \item This is the direction of boat travel
+        \item During the drive phase, the boat travels in the $-y$ direction
+        \item The blade pushes the water in the $+x$ direction
+    \end{itemize}
+    \item \textbf{$z$-axis:} Perpendicular to both $x$ and $y$ (vertical direction)
+    \begin{itemize}
+        \item Positive direction: away from the water (upward)
+        \item Negative direction: toward the water (downward)
+    \end{itemize}
+\end{itemize}
+
+\textbf{Note:} In the top view representation, bending occurs in the $x$-$y$ plane, with deflection $w(x)$ in the $y$-direction. During rowing, the force at the handle is typically in the $-y$ direction (downward), causing the oar to bend with the blade side deflecting upward relative to the handle.
+
+\subsection{Sign Conventions}
+
+\begin{itemize}
+    \item \textbf{Forces:} Positive in the positive $y$ direction (upward, away from water)
+    \item \textbf{Moments:} Positive according to right-hand rule about $z$-axis (positive moment causes compression on top surface, $y > 0$)
+    \item \textbf{Deflection:} $w(x) > 0$ indicates upward deflection (in $+y$ direction)
+    \item \textbf{Rotation about $z$-axis:} $\theta(x) > 0$ indicates rotation about $z$-axis according to right-hand rule (bending rotation)
+    \item \textbf{Rotation about $x$-axis:} $\phi(x) > 0$ indicates rotation about $x$-axis according to right-hand rule (torsional rotation/twist)
+    \item \textbf{Strain:} $\varepsilon > 0$ indicates tension, $\varepsilon < 0$ indicates compression
+\end{itemize}
+
+\textbf{Note:} During rowing, the force at the handle is typically in the $-y$ direction (downward), causing the oar to bend with the blade side deflecting upward relative to the handle.
+
+% ============================================
+\section{Oar Geometry}
+% ============================================
+
+\subsection{Overall Dimensions}
+
+The sculling oar consists of outboard (blade side) and inboard (handle side) sections, separated by the oarlock at $x = 0$.
+
+\begin{table}[h]
+\centering
+\caption{Overall oar dimensions}
+\begin{tabular}{llr}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\midrule
+$L_{\text{out}}$ & Total outboard length (blade tip to oarlock) & \SI{2000}{mm} \\
+$L_{\text{in}}$ & Inboard length (oarlock to handle end) & \SI{900}{mm} \\
+$L_{\text{total}}$ & Total oar length & \SI{2900}{mm} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Blade Geometry}
+
+\begin{table}[h]
+\centering
+\caption{Blade dimensions}
+\begin{tabular}{llr}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\midrule
+$L_{\text{blade}}$ & Blade length & \SI{430}{mm} \\
+$w_{\text{blade}}$ & Blade maximum width & \SI{150}{mm} \\
+$t_{\text{blade}}$ & Blade thickness & \SI{5}{mm} \\
+$h_{\text{bow}}$ & Blade bow height (spoon curvature) & \SI{40}{mm} \\
+$x_{\text{blade}}$ & Blade tip position & $-L_{\text{out}} = \SI{-2000}{mm}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Shaft Geometry}
+
+The shaft is a hollow circular tube with constant cross-section.
+
+\begin{table}[h]
+\centering
+\caption{Shaft dimensions}
+\begin{tabular}{llr}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\midrule
+$D_{o,s}$ & Shaft outer diameter & \SI{38}{mm} \\
+$D_{i,s}$ & Shaft inner diameter & \SI{32}{mm} \\
+$t_s$ & Shaft wall thickness & \SI{3}{mm} \\
+$L_{\text{shaft,out}}$ & Outboard shaft length & \SI{1570}{mm} \\
+$L_{\text{shaft,in}}$ & Inboard shaft length & \SI{700}{mm} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Shaft Second Moment of Area}
+
+For a hollow circular cross-section:
+\begin{equation}
+I_s = \frac{\pi}{64}\left(D_{o,s}^4 - D_{i,s}^4\right)
+\label{eq:shaft_inertia}
+\end{equation}
+
+\subsection{Sleeve Geometry}
+
+The sleeve is a cylindrical component made of ABS plastic that provides reinforcement around the oarlock region.
+
+\begin{table}[h]
+\centering
+\caption{Sleeve dimensions}
+\begin{tabular}{llr}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\midrule
+$L_{\text{sleeve}}$ & Total sleeve length & \SI{300}{mm} \\
+$L_{\text{sleeve,-x}}$ & Sleeve extension in $-x$ direction from oarlock & \SI{200}{mm} \\
+$L_{\text{sleeve,+x}}$ & Sleeve extension in $+x$ direction from oarlock & \SI{100}{mm} \\
+$D_{\text{sleeve}}$ & Sleeve outer diameter & \SI{60}{mm} \\
+$x_{\text{sleeve,start}}$ & Sleeve start position & $\SI{-200}{mm}$ \\
+$x_{\text{sleeve,end}}$ & Sleeve end position & $\SI{100}{mm}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Collar Geometry}
+
+The collar prevents the oar from sliding through the oarlock.
+
+\begin{table}[h]
+\centering
+\caption{Collar dimensions}
+\begin{tabular}{llr}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\midrule
+$D_{\text{collar}}$ & Collar diameter & \SI{120}{mm} \\
+$t_{\text{collar}}$ & Collar thickness (axial) & \SI{20}{mm} \\
+$x_{\text{collar}}$ & Collar position & $\SI{20}{mm}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Oarlock Geometry}
+
+\begin{table}[h]
+\centering
+\caption{Oarlock dimensions}
+\begin{tabular}{llr}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\midrule
+$t_{\text{oarlock}}$ & Oarlock thickness (axial) & \SI{20}{mm} \\
+$h_{\text{oarlock}}$ & Oarlock height (radial extent) & \SI{160}{mm} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Handle Geometry}
+
+The handle consists of a taper section transitioning from shaft diameter to grip diameter, followed by the grip section.
+
+\begin{table}[h]
+\centering
+\caption{Handle dimensions}
+\begin{tabular}{llr}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\midrule
+$L_{\text{handle}}$ & Total handle length & \SI{200}{mm} \\
+$L_{\text{taper}}$ & Taper length & \SI{50}{mm} \\
+$D_{\text{taper,start}}$ & Taper start diameter & \SI{38}{mm} \\
+$D_{\text{taper,end}}$ & Taper end diameter & \SI{30}{mm} \\
+$L_{\text{grip}}$ & Grip length & \SI{150}{mm} \\
+$D_{\text{grip}}$ & Grip diameter & \SI{35}{mm} \\
+$x_F$ & Handle end position (force application point) & $L_{\text{in}} = \SI{900}{mm}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================
+\section{Measurement Beam Geometry}
+% ============================================
+
+The measurement beam is a rectangular beam attached to the shaft by means of two rigid clamps at specified positions.
+
+\subsection{Beam Dimensions and Position}
+
+\begin{table}[h]
+\centering
+\caption{Beam dimensions}
+\begin{tabular}{llr}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\midrule
+$L_b$ & Beam length (between clamp centers) & \SI{100}{mm} \\
+$h_b$ & Beam height (bending direction, $y$-direction) & \SI{2}{mm} \\
+$b$ & Beam width ($z$-direction) & \SI{10}{\text{--}15}{mm} \\
+$x_b$ & Beam root position (first clamp) & \SI{200}{mm} \\
+$e_b$ & Beam neutral axis eccentricity from shaft centerline & \SI{20}{mm} \\
+$y_b$ & Beam neutral axis $y$-coordinate & $D_{o,s}/2 + e_b$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Beam neutral axis position:} The beam neutral axis is located at $y_b$ measured from the global coordinate origin (shaft centerline at $y = 0$). This position is calculated as:
+\begin{equation}
+y_b = \frac{D_{o,s}}{2} + e_b
+\label{eq:beam_neutral_axis}
+\end{equation}
+
+where $D_{o,s}/2$ is the shaft outer radius and $e_b$ is the distance from the shaft outer surface to the beam neutral axis. The beam extends from the shaft surface upward (in the $+y$ direction) to provide clearance for mounting strain gauges on both top and bottom surfaces.
+
+\subsection{Beam Clamp Positions}
+
+The beam is attached to the shaft at two locations:
+\begin{align}
+x_{b,1} &= x_b = \SI{200}{mm} \quad \text{(root clamp)} \\
+x_{b,2} &= x_b + L_b = \SI{300}{mm} \quad \text{(tip clamp)}
+\end{align}
+
+\subsection{Beam Second Moment of Area}
+
+For a rectangular cross-section with height $h_b$ (in bending direction, $y$) and width $b$ (perpendicular to bending, $z$):
+\begin{equation}
+I_b = \frac{b h_b^3}{12}
+\label{eq:beam_inertia}
+\end{equation}
+
+\subsection{Clamp Rigidity and Assembly Tolerances}
+
+The clamps are assumed to be \textbf{rigid connections} that prevent relative motion between the beam and shaft at the attachment points. However, two manufacturing and assembly phenomena must be considered:
+
+\subsubsection{System Misalignment}
+
+The entire beam assembly may be rotated around the shaft ($x$-axis) during installation. This misalignment angle, denoted $\phi_{\text{mis}}$, is expected to be within $\pm 1°$. This creates a \textbf{static angular offset} of the entire measurement system, which may result in:
+
+\begin{itemize}
+    \item Apparent strain offset in gauge readings
+    \item Coupling between bending and the misaligned measurement axes
+\end{itemize}
+
+\textbf{[TBD: Quantification of offset effect on strain measurements]}
+
+\subsubsection{Initial Beam Twist}
+
+The two clamps may not be perfectly aligned with each other during assembly, creating an initial twist in the beam. This twist angle, denoted $\phi_0$, represents the relative rotation between the root clamp (at $x = x_b$) and the tip clamp (at $x = x_b + L_b$) around the $x$-axis.
+
+\textbf{Thermal amplification:} The differential thermal expansion between the aluminum beam and carbon shaft can amplify this initial twist. Over the operating temperature range ($\Delta T = 85$ K), the mismatch in thermal expansion creates additional torsional strain that compounds with $\phi_0$.
+
+\textbf{Simplification:} The analysis assumes that twist-induced strains in the strain gauges are \textbf{negligible} compared to bending strains. This assumption should be verified for the expected values of $\phi_{\text{mis}}$ and $\phi_0$.
+
+% ============================================
+\section{Material Properties}
+% ============================================
+
+\subsection{Shaft Material: Carbon Fiber Composite}
+
+The shaft is constructed from carbon fiber composite with fibers aligned predominantly in the $x$ (longitudinal) direction. The properties below are approximations for unidirectional carbon fiber/epoxy composite.
+
+\begin{table}[h]
+\centering
+\caption{Carbon fiber composite properties (longitudinal direction)}
+\begin{tabular}{llr}
+\toprule
+\textbf{Property} & \textbf{Symbol} & \textbf{Value} \\
+\midrule
+Young's modulus (longitudinal) & $E_s$ & \SI{140}{GPa} (approximate) \\
+Poisson's ratio & $\nu_s$ & $0.30$ (approximate) \\
+Coefficient of thermal expansion (longitudinal) & $\alpha_s$ & \SI{-0.5e-6}{K^{-1}} (approximate) \\
+Density & $\rho_s$ & \SI{1600}{kg/m^3} (approximate) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Note:} Carbon fiber composites exhibit highly anisotropic behavior. The longitudinal modulus (fiber direction) is much higher than the transverse modulus. The negative coefficient of thermal expansion in the fiber direction is characteristic of carbon fibers. These values are approximations and can vary significantly depending on fiber type, volume fraction, and layup.
+
+\subsection{Beam Material: Aluminum 1050}
+
+The measurement beam is constructed from Aluminum 1050, a commercially pure aluminum alloy.
+
+\begin{table}[h]
+\centering
+\caption{Aluminum 1050 properties}
+\begin{tabular}{llr}
+\toprule
+\textbf{Property} & \textbf{Symbol} & \textbf{Value} \\
+\midrule
+Young's modulus & $E_b$ & \SI{69}{GPa} \\
+Poisson's ratio & $\nu_b$ & $0.33$ \\
+Coefficient of thermal expansion & $\alpha_b$ & \SI{23.6e-6}{K^{-1}} \\
+Density & $\rho_b$ & \SI{2710}{kg/m^3} \\
+Yield strength & $\sigma_{y,b}$ & \SI{34}{MPa} (annealed) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================
+\section{Strain Gauge Specifications}
+% ============================================
+
+\subsection{Gauge Type and Configuration}
+
+The measurement system uses four linear strain gauges arranged in a full Wheatstone bridge configuration.
+
+\begin{table}[h]
+\centering
+\caption{Strain gauge specifications}
+\begin{tabular}{llr}
+\toprule
+\textbf{Parameter} & \textbf{Symbol} & \textbf{Value} \\
+\midrule
+Nominal resistance & $R_g$ & \SI{1000}{\ohm} $\pm$ \SI{3}{\ohm} \\
+Gauge factor & $GF$ & $2.15$ \\
+Number of gauges & $n_g$ & $4$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Strain Gauge Surface Positions}
+
+The strain gauges are mounted on the top and bottom surfaces of the beam at the following $y$-coordinates:
+\begin{align}
+y_{\text{top}} &= y_b + \frac{h_b}{2} \quad \text{(top surface, tension)} \label{eq:y_top} \\
+y_{\text{bottom}} &= y_b - \frac{h_b}{2} \quad \text{(bottom surface, compression)} \label{eq:y_bottom}
+\end{align}
+
+where $y_b$ is the neutral axis position of the beam from Eq.~\eqref{eq:beam_neutral_axis}.
+
+All four strain gauges are located at the beam midpoint along the $x$-axis:
+\begin{equation}
+x_{\text{gauge}} = x_b + \frac{L_b}{2}
+\label{eq:gauge_position}
+\end{equation}
+
+\subsection{Bridge Configuration}
+
+The four strain gauges form a full Wheatstone bridge with two active half-bridges in opposition:
+
+\begin{itemize}
+    \item \textbf{$R_1$ \& $R_2$ (Top surface):} Located at $y = y_{\text{top}}$, $x = x_{\text{gauge}}$
+    \begin{itemize}
+        \item Experience \textbf{positive strain} (tension) when beam bends due to downward force at handle
+        \item $R_1 = R_g(1 + GF \cdot \varepsilon_{\text{top}})$
+        \item $R_2 = R_g(1 + GF \cdot \varepsilon_{\text{top}})$
+    \end{itemize}
+    \item \textbf{$R_3$ \& $R_4$ (Bottom surface):} Located at $y = y_{\text{bottom}}$, $x = x_{\text{gauge}}$
+    \begin{itemize}
+        \item Experience \textbf{negative strain} (compression) when beam bends due to downward force at handle
+        \item $R_3 = R_g(1 + GF \cdot \varepsilon_{\text{bottom}})$
+        \item $R_4 = R_g(1 + GF \cdot \varepsilon_{\text{bottom}})$
+    \end{itemize}
+\end{itemize}
+
+where $R_g = \SI{1000}{\ohm}$ is the nominal gauge resistance and $GF = 2.15$ is the gauge factor.
+
+\subsection{Bridge Output Voltage}
+
+For a full Wheatstone bridge with resistances $R_1$, $R_2$, $R_3$, $R_4$ arranged as follows:
+\begin{itemize}
+    \item $R_1$ and $R_2$ in one voltage divider (top surface gauges)
+    \item $R_3$ and $R_4$ in the other voltage divider (bottom surface gauges)
+\end{itemize}
+
+The bridge output voltage is:
+\begin{equation}
+V_{\text{out}} = V_{\text{ex}} \left(\frac{R_2}{R_1 + R_2} - \frac{R_4}{R_3 + R_4}\right)
+\label{eq:bridge_basic}
+\end{equation}
+
+Substituting the strain-dependent resistances:
+\begin{align}
+R_1 &= R_g(1 + GF \cdot \varepsilon_{\text{top}}) \\
+R_2 &= R_g(1 + GF \cdot \varepsilon_{\text{top}}) \\
+R_3 &= R_g(1 + GF \cdot \varepsilon_{\text{bottom}}) \\
+R_4 &= R_g(1 + GF \cdot \varepsilon_{\text{bottom}})
+\end{align}
+
+For small strains ($GF \cdot \varepsilon \ll 1$), this simplifies to:
+\begin{equation}
+\frac{V_{\text{out}}}{V_{\text{ex}}} = \frac{GF}{2}\left(\varepsilon_{\text{top}} - \varepsilon_{\text{bottom}}\right)
+\label{eq:bridge_output}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $V_{\text{out}}$ = bridge output voltage
+    \item $V_{\text{ex}}$ = bridge excitation voltage = \SI{3.3}{V}
+    \item $\varepsilon_{\text{top}}$ = average strain on top surface (gauges $R_1$ \& $R_2$)
+    \item $\varepsilon_{\text{bottom}}$ = average strain on bottom surface (gauges $R_3$ \& $R_4$)
+\end{itemize}
+
+\textbf{Strain signs during bending:} When a downward force is applied at the handle (in the $-y$ direction), the beam bends and experiences:
+\begin{itemize}
+    \item \textbf{Top surface} ($R_1$, $R_2$): $\varepsilon_{\text{top}} > 0$ (tension, positive strain)
+    \item \textbf{Bottom surface} ($R_3$, $R_4$): $\varepsilon_{\text{bottom}} < 0$ (compression, negative strain)
+\end{itemize}
+
+This creates a differential strain $\varepsilon_{\text{top}} - \varepsilon_{\text{bottom}} = (+\varepsilon) - (-\varepsilon) = 2\varepsilon$, which doubles the bridge sensitivity compared to a single active gauge. The full bridge configuration maximizes the output voltage for a given bending moment.
+
+\subsection{Data Acquisition System}
+
+The bridge output is measured using a Texas Instruments ADS1220 24-bit delta-sigma analog-to-digital converter.
+
+\begin{table}[h]
+\centering
+\caption{ADC specifications}
+\begin{tabular}{llr}
+\toprule
+\textbf{Parameter} & \textbf{Symbol} & \textbf{Value} \\
+\midrule
+Model & -- & ADS1220 \\
+Resolution & $n_{\text{bits}}$ & 24 bits \\
+LSB (for $V_{\text{ref}} = V_{\text{ex}} = \SI{3.3}{V}$) & LSB & \SI{0.197}{\micro V} \\
+Effective resolution (typical) & ENOB & 15--18 bits (typical) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Note:} The theoretical LSB is calculated as $\text{LSB} = V_{\text{ref}} / 2^{24} = 3.3 / 16777216 = \SI{0.197}{\micro V}$. The effective number of bits (ENOB) is typically 15--18 bits due to noise and depends on the ADC configuration (data rate and programmable gain amplifier settings). Please refer to the ADS1220 datasheet for specific performance at different settings. The PGA alone might not provide sufficient amplification for the microvolt-level signals from the full bridge, and external amplification of the bridge output may be necessary before injecting the measurement signal into the ADC.
+
+% ============================================
+\section{Operating Conditions}
+% ============================================
+
+\subsection{Temperature Range}
+
+The measurement system is expected to operate over the following temperature range:
+
+\begin{table}[h]
+\centering
+\caption{Operating temperature range}
+\begin{tabular}{lr}
+\toprule
+\textbf{Condition} & \textbf{Temperature} \\
+\midrule
+Minimum (cold water, early morning) & \SI{-5}{\celsius} \\
+Maximum (solar heating of carbon shaft) & \SI{80}{\celsius} \\
+Temperature excursion & $\Delta T = \SI{85}{K}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Note:} The maximum temperature assumption of \SI{80}{\celsius} is based on solar radiation heating the black carbon fiber shaft. This value should be verified through:
+\begin{itemize}
+    \item Thermal modeling of solar heating on carbon shaft
+    \item Experimental measurements under various environmental conditions
+    \item Measurement or estimation of solar absorption coefficient of carbon shaft surface [TBD]
+\end{itemize}
+
+\subsection{Mechanical Loading}
+
+During rowing, the handle experiences a vertical force (downward, in the $-y$ direction). The expected force range is:
+
+\begin{table}[h]
+\centering
+\caption{Expected force range at handle}
+\begin{tabular}{lr}
+\toprule
+\textbf{Condition} & \textbf{Force} \\
+\midrule
+Minimum & \SI{0}{N} \\
+Maximum (peak during power stroke) & \SI{200}{kg} = \SI{1962}{N} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Note:} The force is assumed to act vertically downward at the handle end position $x = x_F = \SI{900}{mm}$.
+
+% ============================================
+\section{Theoretical Framework}
+% ============================================
+
+This section presents the theoretical foundations for analyzing the measurement system, including mechanical bending, thermal effects, geometric imperfections, and stability considerations.
+
+\subsection{Beam Bending Theory}
+
+The measurement system relies on Euler-Bernoulli beam theory to relate applied forces to measurable strains.
+
+\subsubsection{Governing Equation}
+
+For a beam subject to transverse loading:
+\begin{equation}
+EI \frac{d^4w}{dx^4} = q(x)
+\label{eq:beam_equation}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $E$ = Young's modulus
+    \item $I$ = second moment of area
+    \item $w(x)$ = transverse deflection
+    \item $q(x)$ = distributed load per unit length
+\end{itemize}
+
+\subsubsection{Moment-Curvature Relation}
+
+\begin{equation}
+M(x) = -EI \frac{d^2w}{dx^2}
+\label{eq:moment_curvature}
+\end{equation}
+
+\subsubsection{Strain-Displacement Relation}
+
+For a beam in pure bending, the longitudinal strain at distance $y$ from the neutral axis is:
+\begin{equation}
+\varepsilon(x,y) = -y \frac{d^2w}{dx^2} = \frac{M(x) \cdot y}{EI}
+\label{eq:strain_displacement}
+\end{equation}
+
+Note the sign convention: positive $M$ causes compression on the top surface ($y > 0$).
+
+\subsection{Thermal Effects}
+
+\subsubsection{Differential Thermal Expansion}
+
+The aluminum beam and carbon shaft have significantly different thermal expansion coefficients:
+\begin{align}
+\alpha_b &= \SI{23.6e-6}{K^{-1}} \quad \text{(Aluminum 1050)} \\
+\alpha_s &= \SI{-0.5e-6}{K^{-1}} \quad \text{(Carbon fiber, approximate)}
+\end{align}
+
+The differential thermal expansion coefficient is:
+\begin{equation}
+\Delta \alpha = \alpha_b - \alpha_s
+\label{eq:delta_alpha}
+\end{equation}
+
+The differential thermal strain over a temperature change $\Delta T$ is:
+\begin{equation}
+\varepsilon_{\text{thermal,differential}} = \Delta \alpha \cdot \Delta T
+\label{eq:thermal_strain_differential}
+\end{equation}
+
+\textbf{[TBD: Analysis of thermal stress induced by constrained differential expansion]}
+
+\subsubsection{Solar Heating Assessment}
+
+\textbf{[TBD: Calculation or citation to validate maximum temperature assumption of \SI{80}{\celsius}]}
+
+\subsection{Beam Misalignment Effects}
+
+System misalignment ($\phi_{\text{mis}}$) creates a static angular offset that affects strain measurements through:
+\begin{itemize}
+    \item Projection error in measured strain
+    \item Coupling between bending moments and misaligned measurement axes
+\end{itemize}
+
+\textbf{[TBD: Quantitative analysis of misalignment effects on bridge output]}
+
+\subsection{Beam Twist Due to Clamps}
+
+Initial twist ($\phi_0$) between clamps creates torsional pre-stress that:
+\begin{itemize}
+    \item Induces initial strain in the beam
+    \item Can be amplified by differential thermal expansion
+    \item May couple with bending to create cross-sensitivity
+\end{itemize}
+
+\textbf{[TBD: Analysis of twist-induced strains and coupling effects]}
+
+\subsection{Beam Imperfections}
+
+Manufacturing imperfections in the beam (curvature, thickness variations, surface roughness) affect:
+\begin{itemize}
+    \item Initial strain distribution
+    \item Stress concentration locations
+    \item Calibration accuracy
+\end{itemize}
+
+\textbf{[TBD: Sensitivity analysis for manufacturing tolerances]}
+
+\subsection{Buckling Analysis}
+
+For a beam under compressive loading, buckling stability must be evaluated. Two types of buckling are considered: mechanical buckling and thermal buckling.
+
+\subsubsection{Mechanical Buckling}
+
+The critical buckling load for a beam is given by the Euler buckling formula:
+
+\begin{equation}
+N_{cr} = \frac{\pi^2 E_b I_b}{(K L_b)^2}
+\label{eq:buckling_critical_general}
+\end{equation}
+
+where $K$ is the effective length factor that depends on the boundary conditions:
+
+\begin{table}[h]
+\centering
+\caption{Effective length factor K for different boundary conditions}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Boundary Condition} & \textbf{K} & \textbf{Relative Strength} \\
+\midrule
+Fixed--Fixed & 0.50 & Strongest \\
+Fixed--Pinned & 0.70 & Very strong \\
+Pinned--Pinned & 1.00 & Baseline \\
+Fixed--Free (cantilever) & 2.00 & Weakest \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For the measurement beam, the clamps are assumed to provide \textbf{pinned boundary conditions} at both ends (preventing translation but allowing rotation). This is more realistic than assuming perfect fixity, as the clamps may not completely prevent rotation. Therefore, $K = 1.0$, and the critical buckling load becomes:
+
+\begin{equation}
+N_{cr} = \frac{\pi^2 E_b I_b}{(1.0 L_b)^2} = \frac{\pi^2 E_b I_b}{L_b^2}
+\label{eq:buckling_critical}
+\end{equation}
+
+Substituting the beam second moment of area from Eq.~\eqref{eq:beam_inertia}:
+
+\begin{equation}
+N_{cr} = \frac{\pi^2 E_b b h_b^3}{12 L_b^2}
+\label{eq:buckling_critical_expanded}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $E_b$ = Young's modulus of beam (aluminum)
+    \item $b$ = beam width ($z$-direction)
+    \item $h_b$ = beam height ($y$-direction, bending direction)
+    \item $L_b$ = beam length between clamps
+    \item $K = 1.0$ = effective length factor for pinned--pinned boundary conditions
+\end{itemize}
+
+\textbf{Note:} The pinned--pinned assumption ($K = 1.0$) is conservative. If the clamps provide partial rotational restraint, the actual $K$ would be between 0.5 (fully fixed) and 1.0 (pinned), resulting in a higher critical buckling load than calculated here.
+
+\subsubsection{Thermal Buckling}
+
+Temperature changes induce compressive axial stress in the beam due to constrained differential thermal expansion. The thermal compressive load is:
+
+\begin{equation}
+N_{th} = E_b A_b \varepsilon_{th}
+\label{eq:thermal_load}
+\end{equation}
+
+where $A_b = b h_b$ is the beam cross-sectional area, and $\varepsilon_{th}$ is the constrained thermal strain:
+
+\begin{equation}
+\varepsilon_{th} = \Delta \alpha \cdot \Delta T = (\alpha_b - \alpha_s) \Delta T
+\label{eq:thermal_strain}
+\end{equation}
+
+Combining Eqs.~\eqref{eq:thermal_load} and \eqref{eq:thermal_strain}:
+
+\begin{equation}
+N_{th} = E_b b h_b (\alpha_b - \alpha_s) \Delta T
+\label{eq:thermal_load_expanded}
+\end{equation}
+
+The critical temperature change for thermal buckling occurs when $N_{th} = N_{cr}$. From Eqs.~\eqref{eq:buckling_critical_expanded} and \eqref{eq:thermal_load_expanded}:
+
+\begin{equation}
+\Delta T_{cr} = \frac{\pi^2 E_b b h_b^3}{12 L_b^2 E_b b h_b (\alpha_b - \alpha_s)} = \frac{\pi^2 h_b^2}{12 L_b^2 (\alpha_b - \alpha_s)}
+\label{eq:thermal_buckling_critical}
+\end{equation}
+
+\subsubsection{Total Compressive Load}
+
+The total axial compressive load $N$ in the beam is the sum of:
+
+\begin{equation}
+N = N_{th} + N_{assy}
+\label{eq:total_load}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $N_{th}$ = thermal compressive load from Eq.~\eqref{eq:thermal_load_expanded}
+    \item $N_{assy}$ = pre-stress from assembly (clamp tightening) [TBD]
+\end{itemize}
+
+\textbf{Note:} The bending of the beam does not contribute to axial compression (for small deflections in classical beam theory). Bending creates moments $M_b(x)$ and shear forces $V_b(x)$, which must be checked separately against yield criteria.
+
+\subsubsection{Stability Criteria}
+
+The beam remains stable if the total load is below the critical buckling load:
+
+\begin{equation}
+N < N_{cr}
+\label{eq:stability_criterion}
+\end{equation}
+
+For design safety, accounting for imperfections and uncertainties:
+
+\begin{equation}
+N < 0.5 N_{cr}
+\label{eq:stability_criterion_safety}
+\end{equation}
+
+\textbf{[TBD: Estimation of assembly pre-stress $N_{assy}$ from clamp tightening]}
+
+\textbf{[TBD: Verification that $N = N_{th} + N_{assy} < 0.5 N_{cr}$ for operating temperature range]}
+
+\textbf{[TBD: Verification of stability criteria for operating temperature range]}
+
+\subsection{Thermal Amplification}
+
+Temperature changes amplify several effects:
+\begin{itemize}
+    \item Initial twist ($\phi_0$) increases due to differential expansion
+    \item Beam pre-stress changes with temperature
+    \item Compressive load approaches critical buckling load
+\end{itemize}
+
+\textbf{[TBD: Comprehensive thermal amplification analysis]}
+
+% ============================================
+\section{Analysis Sections}
+% ============================================
+
+\subsection{Theory 1: Clamped Boundary Condition}
+
+This theory assumes the oar is clamped at the oarlock position ($x \leq 0$) and a force $F$ is applied at the handle ($x = x_F$). The analysis must account for:
+
+\begin{itemize}
+    \item \textbf{Shaft bending:} Primary deflection of the carbon fiber shaft under applied load
+    \item \textbf{Beam bending:} Secondary deflection of the aluminum measurement beam
+    \item \textbf{System misalignment ($\phi_{\text{mis}}$):} Static angular offset of beam assembly around shaft axis
+    \item \textbf{Beam torsion due to clamping ($\phi_0$):} Initial twist between clamps creating torsional pre-stress
+    \item \textbf{Thermal expansion of beam:} Differential expansion between aluminum beam and carbon shaft (shaft thermal effects assumed negligible)
+    \item \textbf{Beam imperfections:} Manufacturing variations in beam geometry (curvature, thickness)
+    \item \textbf{Buckling potential:} Compressive loads approaching critical buckling load $N_{cr}$
+\end{itemize}
+
+\textbf{[TBD: Detailed analysis with boundary conditions, deflection equations, moment distributions, strain calculations]}
+
+\subsection{Theory 2: Pin Support Boundary Conditions}
+
+This theory assumes the oar is supported by pin supports at the oarlock position ($x = 0$) and at the end of the outboard shaft ($x = -(L_{\text{out}} - L_{\text{blade}})$), with force $F$ applied at the handle ($x = x_F$). The analysis must account for:
+
+\begin{itemize}
+    \item \textbf{Shaft bending:} Primary deflection of the carbon fiber shaft under applied load
+    \item \textbf{Beam bending:} Secondary deflection of the aluminum measurement beam
+    \item \textbf{System misalignment ($\phi_{\text{mis}}$):} Static angular offset of beam assembly around shaft axis
+    \item \textbf{Beam torsion due to clamping ($\phi_0$):} Initial twist between clamps creating torsional pre-stress
+    \item \textbf{Thermal expansion of beam:} Differential expansion between aluminum beam and carbon shaft (shaft thermal effects assumed negligible)
+    \item \textbf{Beam imperfections:} Manufacturing variations in beam geometry (curvature, thickness)
+    \item \textbf{Buckling potential:} Compressive loads approaching critical buckling load $N_{cr}$
+\end{itemize}
+
+\textbf{[TBD: Detailed analysis with boundary conditions, deflection equations, moment distributions, strain calculations]}
+
+\subsection{Sensitivity Analysis}
+
+\subsubsection{Manufacturing Tolerances}
+
+\textbf{[TBD: Effect of beam curvature, dimension variations on strain measurements]}
+
+\subsubsection{Misalignment Effects}
+
+Two types of geometric misalignment affect the measurement system:
+
+\paragraph{System Misalignment ($\phi_{\text{mis}}$)}
+Rotation of the entire beam assembly around the shaft axis (within $\pm 1°$) creates:
+\begin{itemize}
+    \item Static offset in strain gauge readings
+    \item Projection error: measured strain = $\varepsilon_{\text{true}} \cos(\phi_{\text{mis}})$
+    \item For $\phi_{\text{mis}} = 1°$: error $\approx 0.015\%$ (likely negligible)
+\end{itemize}
+
+\textbf{[TBD: Detailed analysis of misalignment effect on bridge output]}
+
+\paragraph{Initial Beam Twist ($\phi_0$)}
+Relative rotation between clamps creates torsional pre-stress in the beam:
+\begin{itemize}
+    \item Direct effect: initial twist angle $\phi_0$
+    \item Thermal amplification: differential thermal expansion increases twist over temperature range
+    \item Coupling with bending: twist may create cross-sensitivity in strain measurements
+\end{itemize}
+
+\textbf{[TBD: Analysis of initial twist and thermal amplification effects]}
+
+\subsubsection{Gauge Positioning Errors}
+
+\textbf{[TBD: Sensitivity to gauge placement accuracy]}
+
+\subsection{Signal Amplification Requirements}
+
+\subsubsection{Expected Strain Levels}
+
+\textbf{[TBD: Calculate expected strains for typical rowing forces]}
+
+\subsubsection{Bridge Output Voltage}
+
+For expected strain $\varepsilon$ and excitation voltage $V_{\text{ex}}$ [TBD]:
+\begin{equation}
+V_{\text{out}} = V_{\text{ex}} \cdot \frac{GF}{2} \cdot (\varepsilon_{\text{top}} - \varepsilon_{\text{bottom}})
+\label{eq:expected_signal}
+\end{equation}
+
+\textbf{[TBD: Determine if amplification is required based on ADC resolution and noise floor]}
+
+% ============================================
+\section{Open Questions and Future Work}
+% ============================================
+
+The following items require additional information or analysis:
+
+\begin{enumerate}
+    \item Validation of maximum temperature (\SI{80}{\celsius}) through thermal modeling or measurement
+    \item Solar absorption coefficient of carbon shaft surface
+    \item Characterization of system misalignment tolerance ($\phi_{\text{mis}}$)
+    \item Measurement of initial beam twist ($\phi_0$) after assembly
+    \item Analysis of thermal amplification of initial twist
+    \item Verification of assumption that twist-induced strains are negligible
+    \item Detailed boundary condition derivations for Theory 1 (clamped) and Theory 2 (pin supports)
+    \item Analytical solutions for deflection $w(x)$ and strain $\varepsilon(x)$ distributions
+    \item Thermal stress analysis from constrained differential expansion
+    \item Estimation of assembly pre-stress ($N_{\text{assy}}$) from clamp tightening
+    \item Verification that $N = N_{th} + N_{assy} < 0.5 N_{cr}$ over operating temperature range
+    \item Sensitivity analysis: manufacturing tolerances, gauge positioning errors
+    \item Signal amplification requirements based on calculated strain levels
+    \item Experimental validation plan
+\end{enumerate}
+
+% ============================================
+\section{Nomenclature and Subscript Conventions}
+% ============================================
+
+\subsection{Subscript Conventions}
+
+To maintain clarity and avoid ambiguity, the following subscript conventions are used throughout this document:
+
+\begin{table}[h]
+\centering
+\caption{Subscript conventions}
+\begin{tabular}{ll}
+\toprule
+\textbf{Subscript} & \textbf{Meaning} \\
+\midrule
+$s$ & Shaft (carbon fiber oar shaft) \\
+$b$ & Beam (aluminum measurement beam) \\
+$g$ & Gauge (strain gauge) \\
+$\text{out}$ & Outboard (blade side, $x < 0$) \\
+$\text{in}$ & Inboard (handle side, $x > 0$) \\
+$\text{top}$ & Top surface of beam ($y = y_b + h_b/2$) \\
+$\text{bottom}$ & Bottom surface of beam ($y = y_b - h_b/2$) \\
+$\text{thermal}$ & Thermal component \\
+$\text{mech}$ & Mechanical component \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Complete Nomenclature}
+
+\begin{table}[h]
+\centering
+\caption{Nomenclature - Geometric parameters}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$x, y, z$ & Cartesian coordinates & mm \\
+$L_{\text{out}}$ & Total outboard length & mm \\
+$L_{\text{in}}$ & Total inboard length & mm \\
+$L_b$ & Beam length & mm \\
+$h_b$ & Beam height & mm \\
+$b$ & Beam width & mm \\
+$D_{o,s}$ & Shaft outer diameter & mm \\
+$D_{i,s}$ & Shaft inner diameter & mm \\
+$t_s$ & Shaft wall thickness & mm \\
+$e_b$ & Beam eccentricity from shaft centerline & mm \\
+$y_b$ & Beam neutral axis position & mm \\
+$x_b$ & Beam root position & mm \\
+$x_F$ & Handle end position (force application) & mm \\
+$\phi_{\text{mis}}$ & System misalignment angle around shaft & deg or rad \\
+$\phi_0$ & Initial beam twist (relative clamp rotation) & deg or rad \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Nomenclature - Material properties}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$E_s$ & Young's modulus of shaft (carbon) & GPa \\
+$E_b$ & Young's modulus of beam (aluminum) & GPa \\
+$\nu_s$ & Poisson's ratio of shaft & -- \\
+$\nu_b$ & Poisson's ratio of beam & -- \\
+$\alpha_s$ & Thermal expansion coefficient of shaft & K$^{-1}$ \\
+$\alpha_b$ & Thermal expansion coefficient of beam & K$^{-1}$ \\
+$\rho_s$ & Density of shaft & kg/m$^3$ \\
+$\rho_b$ & Density of beam & kg/m$^3$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Nomenclature - Mechanical variables}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$F$ & Applied force at handle & N \\
+$V_s(x)$ & Shear force in shaft & N \\
+$V_b(x)$ & Shear force in beam & N \\
+$M_s(x)$ & Bending moment in shaft & N·mm \\
+$M_b(x)$ & Bending moment in beam & N·mm \\
+$w_s(x)$ & Vertical deflection of shaft & mm \\
+$w_b(x)$ & Vertical deflection of beam & mm \\
+$\theta_s(x)$ & Rotation angle of shaft about $z$-axis (bending) & rad \\
+$\theta_b(x)$ & Rotation angle of beam about $z$-axis (bending) & rad \\
+$\phi_s(x)$ & Rotation angle of shaft about $x$-axis (torsion) & rad \\
+$\phi_b(x)$ & Rotation angle of beam about $x$-axis (torsion) & rad \\
+$I_s$ & Second moment of area of shaft & mm$^4$ \\
+$I_b$ & Second moment of area of beam & mm$^4$ \\
+$\varepsilon(x,y)$ & Strain at position $(x,y)$ & -- \\
+$\sigma(x,y)$ & Stress at position $(x,y)$ & MPa \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Nomenclature - Strain gauge parameters}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$R_g$ & Strain gauge nominal resistance & $\Omega$ \\
+$GF$ & Gauge factor & -- \\
+$R_1, R_2$ & Top surface gauge resistances & $\Omega$ \\
+$R_3, R_4$ & Bottom surface gauge resistances & $\Omega$ \\
+$\varepsilon_{\text{top}}$ & Strain on top surface & -- \\
+$\varepsilon_{\text{bottom}}$ & Strain on bottom surface & -- \\
+$V_{\text{ex}}$ & Bridge excitation voltage & V \\
+$V_{\text{out}}$ & Bridge output voltage & V \\
+$\Delta R$ & Change in gauge resistance & $\Omega$ \\
+$x_{\text{gauge}}$ & Strain gauge $x$-position & mm \\
+$y_{\text{top}}$ & Top surface $y$-position & mm \\
+$y_{\text{bottom}}$ & Bottom surface $y$-position & mm \\
+$n_{\text{bits}}$ & ADC resolution & bits \\
+LSB & Least significant bit voltage & $\mu$V \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Nomenclature - Thermal parameters}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$T$ & Temperature & \si{\degreeCelsius} \\
+$T_0$ & Reference temperature & \si{\degreeCelsius} \\
+$\Delta T$ & Temperature change & K \\
+$\varepsilon_{\text{thermal}}$ & Thermal strain & -- \\
+$\Delta L_{\text{thermal}}$ & Thermal expansion & mm \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================
+\section{References}
+% ============================================
+
+\textbf{[TBD: Add references for material properties, beam theory, strain gauge technology]}
+
+\end{document}

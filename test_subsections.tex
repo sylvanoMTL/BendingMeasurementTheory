@@ -1,0 +1,49 @@
+% =====================================================================
+%                  MASTER DOCUMENT TEMPLATE (main.tex)
+% =====================================================================
+
+\documentclass[a4paper,12pt]{article}
+
+% ---------- Packages ----------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{caption}
+
+% ---------- Document Info ----------
+\title{Oar Measurement System Specification}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\clearpage
+
+% =====================================================================
+%                     MAIN DOCUMENT SECTIONS
+% =====================================================================
+
+\section{Structural Analysis}
+
+\subsection{Beam Theory Assumptions}
+Text for your beam assumptions goes here...
+
+\subsection{Buckling Analysis}
+Text for buckling section (8.6 equivalent) goes here...
+
+% --- Here is where we include your subsection 8.7 ---
+\input{section_thermal_amplification}
+
+% Continue with next sections...
+\section{Electronics and Signal Chain}
+Text about electronics...
+
+\section{Calibration and Testing}
+Text about calibration...
+
+% =====================================================================
+\end{document}
