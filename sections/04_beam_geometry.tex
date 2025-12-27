@@ -1,0 +1,72 @@
+\section{Measurement Beam Geometry}
+% ============================================
+
+The measurement beam is a rectangular beam attached to the shaft by means of two rigid clamps at specified positions.
+
+\subsection{Beam Dimensions and Position}
+
+\begin{table}[h]
+\centering
+\caption{Beam dimensions}
+\begin{tabular}{llr}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\midrule
+$L_b$ & Beam length (between clamp centers) & \SI{100}{mm} \\
+$h_b$ & Beam height (bending direction, $y$-direction) & \SI{2}{mm} \\
+$b$ & Beam width ($z$-direction) & \SI{10}{\text{--}15}{mm} \\
+$x_b$ & Beam root position (first clamp) & \SI{200}{mm} \\
+$e_b$ & Beam neutral axis eccentricity from shaft centerline & \SI{20}{mm} \\
+$y_b$ & Beam neutral axis $y$-coordinate & $D_{o,s}/2 + e_b$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Beam neutral axis position:} The beam neutral axis is located at $y_b$ measured from the global coordinate origin (shaft centerline at $y = 0$). This position is calculated as:
+\begin{equation}
+y_b = \frac{D_{o,s}}{2} + e_b
+\label{eq:beam_neutral_axis}
+\end{equation}
+
+where $D_{o,s}/2$ is the shaft outer radius and $e_b$ is the distance from the shaft outer surface to the beam neutral axis. The beam extends from the shaft surface upward (in the $+y$ direction) to provide clearance for mounting strain gauges on both top and bottom surfaces.
+
+\subsection{Beam Clamp Positions}
+
+The beam is attached to the shaft at two locations:
+\begin{align}
+x_{b,1} &= x_b = \SI{200}{mm} \quad \text{(root clamp)} \\
+x_{b,2} &= x_b + L_b = \SI{300}{mm} \quad \text{(tip clamp)}
+\end{align}
+
+\subsection{Beam Second Moment of Area}
+
+For a rectangular cross-section with height $h_b$ (in bending direction, $y$) and width $b$ (perpendicular to bending, $z$):
+\begin{equation}
+I_b = \frac{b h_b^3}{12}
+\label{eq:beam_inertia}
+\end{equation}
+
+\subsection{Clamp Rigidity and Assembly Tolerances}
+
+The clamps are assumed to be \textbf{rigid connections} that prevent relative motion between the beam and shaft at the attachment points. However, two manufacturing and assembly phenomena must be considered:
+
+\subsubsection{System Misalignment}
+
+The entire beam assembly may be rotated around the shaft ($x$-axis) during installation. This misalignment angle, denoted $\phi_{\text{mis}}$, is expected to be within $\pm 1°$. This creates a \textbf{static angular offset} of the entire measurement system, which may result in:
+
+\begin{itemize}
+    \item Apparent strain offset in gauge readings
+    \item Coupling between bending and the misaligned measurement axes
+\end{itemize}
+
+\textbf{[TBD: Quantification of offset effect on strain measurements]}
+
+\subsubsection{Initial Beam Twist}
+
+The two clamps may not be perfectly aligned with each other during assembly, creating an initial twist in the beam. This twist angle, denoted $\phi_0$, represents the relative rotation between the root clamp (at $x = x_b$) and the tip clamp (at $x = x_b + L_b$) around the $x$-axis.
+
+\textbf{Thermal amplification:} The differential thermal expansion between the aluminum beam and carbon shaft can amplify this initial twist. Over the operating temperature range ($\Delta T = 85$ K), the mismatch in thermal expansion creates additional torsional strain that compounds with $\phi_0$.
+
+\textbf{Simplification:} The analysis assumes that twist-induced strains in the strain gauges are \textbf{negligible} compared to bending strains. This assumption should be verified for the expected values of $\phi_{\text{mis}}$ and $\phi_0$.
+
+% ============================================

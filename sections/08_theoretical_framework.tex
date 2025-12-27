@@ -1,0 +1,238 @@
+\section{Theoretical Framework}
+% ============================================
+
+This section presents the theoretical foundations for analyzing the measurement system, including mechanical bending, thermal effects, geometric imperfections, and stability considerations.
+
+\subsection{Beam Bending Theory}
+
+The measurement system relies on Euler-Bernoulli beam theory to relate applied forces to measurable strains.
+
+\subsubsection{Governing Equation}
+
+For a beam subject to transverse loading:
+\begin{equation}
+EI \frac{d^4w}{dx^4} = q(x)
+\label{eq:beam_equation}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $E$ = Young's modulus
+    \item $I$ = second moment of area
+    \item $w(x)$ = transverse deflection
+    \item $q(x)$ = distributed load per unit length
+\end{itemize}
+
+\subsubsection{Moment-Curvature Relation}
+
+\begin{equation}
+M(x) = -EI \frac{d^2w}{dx^2}
+\label{eq:moment_curvature}
+\end{equation}
+
+\subsubsection{Strain-Displacement Relation}
+
+For a beam in pure bending, the longitudinal strain at distance $y$ from the neutral axis is:
+\begin{equation}
+\varepsilon(x,y) = -y \frac{d^2w}{dx^2} = \frac{M(x) \cdot y}{EI}
+\label{eq:strain_displacement}
+\end{equation}
+
+Note the sign convention: positive $M$ causes compression on the top surface ($y > 0$).
+
+\subsection{Thermal Effects}
+
+\subsubsection{Differential Thermal Expansion}
+
+The aluminum beam and carbon shaft have significantly different thermal expansion coefficients:
+\begin{align}
+\alpha_b &= \SI{23.6e-6}{K^{-1}} \quad \text{(Aluminum 1050)} \\
+\alpha_s &= \SI{-0.5e-6}{K^{-1}} \quad \text{(Carbon fiber, approximate)}
+\end{align}
+
+The differential thermal expansion coefficient is:
+\begin{equation}
+\Delta \alpha = \alpha_b - \alpha_s
+\label{eq:delta_alpha}
+\end{equation}
+
+The differential thermal strain over a temperature change $\Delta T$ is:
+\begin{equation}
+\varepsilon_{\text{thermal,differential}} = \Delta \alpha \cdot \Delta T
+\label{eq:thermal_strain_differential}
+\end{equation}
+
+\textbf{[TBD: Analysis of thermal stress induced by constrained differential expansion]}
+
+\subsubsection{Solar Heating Assessment}
+
+\textbf{[TBD: Calculation or citation to validate maximum temperature assumption of \SI{80}{\celsius}]}
+
+\subsection{Beam Misalignment Effects}
+
+System misalignment ($\phi_{\text{mis}}$) creates a static angular offset that affects strain measurements through:
+\begin{itemize}
+    \item Projection error in measured strain
+    \item Coupling between bending moments and misaligned measurement axes
+\end{itemize}
+
+\textbf{[TBD: Quantitative analysis of misalignment effects on bridge output]}
+
+\subsection{Beam Twist Due to Clamps}
+
+Initial twist ($\phi_0$) between clamps creates torsional pre-stress that:
+\begin{itemize}
+    \item Induces initial strain in the beam
+    \item Can be amplified by differential thermal expansion
+    \item May couple with bending to create cross-sensitivity
+\end{itemize}
+
+\textbf{[TBD: Analysis of twist-induced strains and coupling effects]}
+
+\subsection{Beam Imperfections}
+
+Manufacturing imperfections in the beam (curvature, thickness variations, surface roughness) affect:
+\begin{itemize}
+    \item Initial strain distribution
+    \item Stress concentration locations
+    \item Calibration accuracy
+\end{itemize}
+
+\textbf{[TBD: Sensitivity analysis for manufacturing tolerances]}
+
+\subsection{Buckling Analysis}
+
+For a beam under compressive loading, buckling stability must be evaluated. Two types of buckling are considered: mechanical buckling and thermal buckling.
+
+\subsubsection{Mechanical Buckling}
+
+The critical buckling load for a beam is given by the Euler buckling formula:
+
+\begin{equation}
+N_{cr} = \frac{\pi^2 E_b I_b}{(K L_b)^2}
+\label{eq:buckling_critical_general}
+\end{equation}
+
+where $K$ is the effective length factor that depends on the boundary conditions:
+
+\begin{table}[h]
+\centering
+\caption{Effective length factor K for different boundary conditions}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Boundary Condition} & \textbf{K} & \textbf{Relative Strength} \\
+\midrule
+Fixed--Fixed & 0.50 & Strongest \\
+Fixed--Pinned & 0.70 & Very strong \\
+Pinned--Pinned & 1.00 & Baseline \\
+Fixed--Free (cantilever) & 2.00 & Weakest \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For the measurement beam, the clamps are assumed to provide \textbf{pinned boundary conditions} at both ends (preventing translation but allowing rotation). This is more realistic than assuming perfect fixity, as the clamps may not completely prevent rotation. Therefore, $K = 1.0$, and the critical buckling load becomes:
+
+\begin{equation}
+N_{cr} = \frac{\pi^2 E_b I_b}{(1.0 L_b)^2} = \frac{\pi^2 E_b I_b}{L_b^2}
+\label{eq:buckling_critical}
+\end{equation}
+
+Substituting the beam second moment of area from Eq.~\eqref{eq:beam_inertia}:
+
+\begin{equation}
+N_{cr} = \frac{\pi^2 E_b b h_b^3}{12 L_b^2}
+\label{eq:buckling_critical_expanded}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $E_b$ = Young's modulus of beam (aluminum)
+    \item $b$ = beam width ($z$-direction)
+    \item $h_b$ = beam height ($y$-direction, bending direction)
+    \item $L_b$ = beam length between clamps
+    \item $K = 1.0$ = effective length factor for pinned--pinned boundary conditions
+\end{itemize}
+
+\textbf{Note:} The pinned--pinned assumption ($K = 1.0$) is conservative. If the clamps provide partial rotational restraint, the actual $K$ would be between 0.5 (fully fixed) and 1.0 (pinned), resulting in a higher critical buckling load than calculated here.
+
+\subsubsection{Thermal Buckling}
+
+Temperature changes induce compressive axial stress in the beam due to constrained differential thermal expansion. The thermal compressive load is:
+
+\begin{equation}
+N_{th} = E_b A_b \varepsilon_{th}
+\label{eq:thermal_load}
+\end{equation}
+
+where $A_b = b h_b$ is the beam cross-sectional area, and $\varepsilon_{th}$ is the constrained thermal strain:
+
+\begin{equation}
+\varepsilon_{th} = \Delta \alpha \cdot \Delta T = (\alpha_b - \alpha_s) \Delta T
+\label{eq:thermal_strain}
+\end{equation}
+
+Combining Eqs.~\eqref{eq:thermal_load} and \eqref{eq:thermal_strain}:
+
+\begin{equation}
+N_{th} = E_b b h_b (\alpha_b - \alpha_s) \Delta T
+\label{eq:thermal_load_expanded}
+\end{equation}
+
+The critical temperature change for thermal buckling occurs when $N_{th} = N_{cr}$. From Eqs.~\eqref{eq:buckling_critical_expanded} and \eqref{eq:thermal_load_expanded}:
+
+\begin{equation}
+\Delta T_{cr} = \frac{\pi^2 E_b b h_b^3}{12 L_b^2 E_b b h_b (\alpha_b - \alpha_s)} = \frac{\pi^2 h_b^2}{12 L_b^2 (\alpha_b - \alpha_s)}
+\label{eq:thermal_buckling_critical}
+\end{equation}
+
+\subsubsection{Total Compressive Load}
+
+The total axial compressive load $N$ in the beam is the sum of:
+
+\begin{equation}
+N = N_{th} + N_{assy}
+\label{eq:total_load}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $N_{th}$ = thermal compressive load from Eq.~\eqref{eq:thermal_load_expanded}
+    \item $N_{assy}$ = pre-stress from assembly (clamp tightening) [TBD]
+\end{itemize}
+
+\textbf{Note:} The bending of the beam does not contribute to axial compression (for small deflections in classical beam theory). Bending creates moments $M_b(x)$ and shear forces $V_b(x)$, which must be checked separately against yield criteria.
+
+\subsubsection{Stability Criteria}
+
+The beam remains stable if the total load is below the critical buckling load:
+
+\begin{equation}
+N < N_{cr}
+\label{eq:stability_criterion}
+\end{equation}
+
+For design safety, accounting for imperfections and uncertainties:
+
+\begin{equation}
+N < 0.5 N_{cr}
+\label{eq:stability_criterion_safety}
+\end{equation}
+
+\textbf{[TBD: Estimation of assembly pre-stress $N_{assy}$ from clamp tightening]}
+
+\textbf{[TBD: Verification that $N = N_{th} + N_{assy} < 0.5 N_{cr}$ for operating temperature range]}
+
+\textbf{[TBD: Verification of stability criteria for operating temperature range]}
+
+\subsection{Thermal Amplification}
+
+Temperature changes amplify several effects:
+\begin{itemize}
+    \item Initial twist ($\phi_0$) increases due to differential expansion
+    \item Beam pre-stress changes with temperature
+    \item Compressive load approaches critical buckling load
+\end{itemize}
+
+\textbf{[TBD: Comprehensive thermal amplification analysis]}
+
+% ============================================

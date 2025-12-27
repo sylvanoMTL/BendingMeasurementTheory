@@ -1,0 +1,142 @@
+\section{Nomenclature and Subscript Conventions}
+% ============================================
+
+\subsection{Subscript Conventions}
+
+To maintain clarity and avoid ambiguity, the following subscript conventions are used throughout this document:
+
+\begin{table}[h]
+\centering
+\caption{Subscript conventions}
+\begin{tabular}{ll}
+\toprule
+\textbf{Subscript} & \textbf{Meaning} \\
+\midrule
+$s$ & Shaft (carbon fiber oar shaft) \\
+$b$ & Beam (aluminum measurement beam) \\
+$g$ & Gauge (strain gauge) \\
+$\text{out}$ & Outboard (blade side, $x < 0$) \\
+$\text{in}$ & Inboard (handle side, $x > 0$) \\
+$\text{top}$ & Top surface of beam ($y = y_b + h_b/2$) \\
+$\text{bottom}$ & Bottom surface of beam ($y = y_b - h_b/2$) \\
+$\text{thermal}$ & Thermal component \\
+$\text{mech}$ & Mechanical component \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Complete Nomenclature}
+
+\begin{table}[h]
+\centering
+\caption{Nomenclature - Geometric parameters}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$x, y, z$ & Cartesian coordinates & mm \\
+$L_{\text{out}}$ & Total outboard length & mm \\
+$L_{\text{in}}$ & Total inboard length & mm \\
+$L_b$ & Beam length & mm \\
+$h_b$ & Beam height & mm \\
+$b$ & Beam width & mm \\
+$D_{o,s}$ & Shaft outer diameter & mm \\
+$D_{i,s}$ & Shaft inner diameter & mm \\
+$t_s$ & Shaft wall thickness & mm \\
+$e_b$ & Beam eccentricity from shaft centerline & mm \\
+$y_b$ & Beam neutral axis position & mm \\
+$x_b$ & Beam root position & mm \\
+$x_F$ & Handle end position (force application) & mm \\
+$\phi_{\text{mis}}$ & System misalignment angle around shaft & deg or rad \\
+$\phi_0$ & Initial beam twist (relative clamp rotation) & deg or rad \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Nomenclature - Material properties}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$E_s$ & Young's modulus of shaft (carbon) & GPa \\
+$E_b$ & Young's modulus of beam (aluminum) & GPa \\
+$\nu_s$ & Poisson's ratio of shaft & -- \\
+$\nu_b$ & Poisson's ratio of beam & -- \\
+$\alpha_s$ & Thermal expansion coefficient of shaft & K$^{-1}$ \\
+$\alpha_b$ & Thermal expansion coefficient of beam & K$^{-1}$ \\
+$\rho_s$ & Density of shaft & kg/m$^3$ \\
+$\rho_b$ & Density of beam & kg/m$^3$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Nomenclature - Mechanical variables}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$F$ & Applied force at handle & N \\
+$V_s(x)$ & Shear force in shaft & N \\
+$V_b(x)$ & Shear force in beam & N \\
+$M_s(x)$ & Bending moment in shaft & N·mm \\
+$M_b(x)$ & Bending moment in beam & N·mm \\
+$w_s(x)$ & Vertical deflection of shaft & mm \\
+$w_b(x)$ & Vertical deflection of beam & mm \\
+$\theta_s(x)$ & Rotation angle of shaft about $z$-axis (bending) & rad \\
+$\theta_b(x)$ & Rotation angle of beam about $z$-axis (bending) & rad \\
+$\phi_s(x)$ & Rotation angle of shaft about $x$-axis (torsion) & rad \\
+$\phi_b(x)$ & Rotation angle of beam about $x$-axis (torsion) & rad \\
+$I_s$ & Second moment of area of shaft & mm$^4$ \\
+$I_b$ & Second moment of area of beam & mm$^4$ \\
+$\varepsilon(x,y)$ & Strain at position $(x,y)$ & -- \\
+$\sigma(x,y)$ & Stress at position $(x,y)$ & MPa \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Nomenclature - Strain gauge parameters}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$R_g$ & Strain gauge nominal resistance & $\Omega$ \\
+$GF$ & Gauge factor & -- \\
+$R_1, R_2$ & Top surface gauge resistances & $\Omega$ \\
+$R_3, R_4$ & Bottom surface gauge resistances & $\Omega$ \\
+$\varepsilon_{\text{top}}$ & Strain on top surface & -- \\
+$\varepsilon_{\text{bottom}}$ & Strain on bottom surface & -- \\
+$V_{\text{ex}}$ & Bridge excitation voltage & V \\
+$V_{\text{out}}$ & Bridge output voltage & V \\
+$\Delta R$ & Change in gauge resistance & $\Omega$ \\
+$x_{\text{gauge}}$ & Strain gauge $x$-position & mm \\
+$y_{\text{top}}$ & Top surface $y$-position & mm \\
+$y_{\text{bottom}}$ & Bottom surface $y$-position & mm \\
+$n_{\text{bits}}$ & ADC resolution & bits \\
+LSB & Least significant bit voltage & $\mu$V \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Nomenclature - Thermal parameters}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$T$ & Temperature & \si{\degreeCelsius} \\
+$T_0$ & Reference temperature & \si{\degreeCelsius} \\
+$\Delta T$ & Temperature change & K \\
+$\varepsilon_{\text{thermal}}$ & Thermal strain & -- \\
+$\Delta L_{\text{thermal}}$ & Thermal expansion & mm \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================

@@ -1,0 +1,124 @@
+\section{Strain Gauge Specifications}
+% ============================================
+
+\subsection{Gauge Type and Configuration}
+
+The measurement system uses four linear strain gauges arranged in a full Wheatstone bridge configuration.
+
+\begin{table}[h]
+\centering
+\caption{Strain gauge specifications}
+\begin{tabular}{llr}
+\toprule
+\textbf{Parameter} & \textbf{Symbol} & \textbf{Value} \\
+\midrule
+Nominal resistance & $R_g$ & \SI{1000}{\ohm} $\pm$ \SI{3}{\ohm} \\
+Gauge factor & $GF$ & $2.15$ \\
+Number of gauges & $n_g$ & $4$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Strain Gauge Surface Positions}
+
+The strain gauges are mounted on the top and bottom surfaces of the beam at the following $y$-coordinates:
+\begin{align}
+y_{\text{top}} &= y_b + \frac{h_b}{2} \quad \text{(top surface, tension)} \label{eq:y_top} \\
+y_{\text{bottom}} &= y_b - \frac{h_b}{2} \quad \text{(bottom surface, compression)} \label{eq:y_bottom}
+\end{align}
+
+where $y_b$ is the neutral axis position of the beam from Eq.~\eqref{eq:beam_neutral_axis}.
+
+All four strain gauges are located at the beam midpoint along the $x$-axis:
+\begin{equation}
+x_{\text{gauge}} = x_b + \frac{L_b}{2}
+\label{eq:gauge_position}
+\end{equation}
+
+\subsection{Bridge Configuration}
+
+The four strain gauges form a full Wheatstone bridge with two active half-bridges in opposition:
+
+\begin{itemize}
+    \item \textbf{$R_1$ \& $R_2$ (Top surface):} Located at $y = y_{\text{top}}$, $x = x_{\text{gauge}}$
+    \begin{itemize}
+        \item Experience \textbf{positive strain} (tension) when beam bends due to downward force at handle
+        \item $R_1 = R_g(1 + GF \cdot \varepsilon_{\text{top}})$
+        \item $R_2 = R_g(1 + GF \cdot \varepsilon_{\text{top}})$
+    \end{itemize}
+    \item \textbf{$R_3$ \& $R_4$ (Bottom surface):} Located at $y = y_{\text{bottom}}$, $x = x_{\text{gauge}}$
+    \begin{itemize}
+        \item Experience \textbf{negative strain} (compression) when beam bends due to downward force at handle
+        \item $R_3 = R_g(1 + GF \cdot \varepsilon_{\text{bottom}})$
+        \item $R_4 = R_g(1 + GF \cdot \varepsilon_{\text{bottom}})$
+    \end{itemize}
+\end{itemize}
+
+where $R_g = \SI{1000}{\ohm}$ is the nominal gauge resistance and $GF = 2.15$ is the gauge factor.
+
+\subsection{Bridge Output Voltage}
+
+For a full Wheatstone bridge with resistances $R_1$, $R_2$, $R_3$, $R_4$ arranged as follows:
+\begin{itemize}
+    \item $R_1$ and $R_2$ in one voltage divider (top surface gauges)
+    \item $R_3$ and $R_4$ in the other voltage divider (bottom surface gauges)
+\end{itemize}
+
+The bridge output voltage is:
+\begin{equation}
+V_{\text{out}} = V_{\text{ex}} \left(\frac{R_2}{R_1 + R_2} - \frac{R_4}{R_3 + R_4}\right)
+\label{eq:bridge_basic}
+\end{equation}
+
+Substituting the strain-dependent resistances:
+\begin{align}
+R_1 &= R_g(1 + GF \cdot \varepsilon_{\text{top}}) \\
+R_2 &= R_g(1 + GF \cdot \varepsilon_{\text{top}}) \\
+R_3 &= R_g(1 + GF \cdot \varepsilon_{\text{bottom}}) \\
+R_4 &= R_g(1 + GF \cdot \varepsilon_{\text{bottom}})
+\end{align}
+
+For small strains ($GF \cdot \varepsilon \ll 1$), this simplifies to:
+\begin{equation}
+\frac{V_{\text{out}}}{V_{\text{ex}}} = \frac{GF}{2}\left(\varepsilon_{\text{top}} - \varepsilon_{\text{bottom}}\right)
+\label{eq:bridge_output}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $V_{\text{out}}$ = bridge output voltage
+    \item $V_{\text{ex}}$ = bridge excitation voltage = \SI{3.3}{V}
+    \item $\varepsilon_{\text{top}}$ = average strain on top surface (gauges $R_1$ \& $R_2$)
+    \item $\varepsilon_{\text{bottom}}$ = average strain on bottom surface (gauges $R_3$ \& $R_4$)
+\end{itemize}
+
+\textbf{Strain signs during bending:} When a downward force is applied at the handle (in the $-y$ direction), the beam bends and experiences:
+\begin{itemize}
+    \item \textbf{Top surface} ($R_1$, $R_2$): $\varepsilon_{\text{top}} > 0$ (tension, positive strain)
+    \item \textbf{Bottom surface} ($R_3$, $R_4$): $\varepsilon_{\text{bottom}} < 0$ (compression, negative strain)
+\end{itemize}
+
+This creates a differential strain $\varepsilon_{\text{top}} - \varepsilon_{\text{bottom}} = (+\varepsilon) - (-\varepsilon) = 2\varepsilon$, which doubles the bridge sensitivity compared to a single active gauge. The full bridge configuration maximizes the output voltage for a given bending moment.
+
+\subsection{Data Acquisition System}
+
+The bridge output is measured using a Texas Instruments ADS1220 24-bit delta-sigma analog-to-digital converter.
+
+\begin{table}[h]
+\centering
+\caption{ADC specifications}
+\begin{tabular}{llr}
+\toprule
+\textbf{Parameter} & \textbf{Symbol} & \textbf{Value} \\
+\midrule
+Model & -- & ADS1220 \\
+Resolution & $n_{\text{bits}}$ & 24 bits \\
+LSB (for $V_{\text{ref}} = V_{\text{ex}} = \SI{3.3}{V}$) & LSB & \SI{0.197}{\micro V} \\
+Effective resolution (typical) & ENOB & 15--18 bits (typical) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Note:} The theoretical LSB is calculated as $\text{LSB} = V_{\text{ref}} / 2^{24} = 3.3 / 16777216 = \SI{0.197}{\micro V}$. The effective number of bits (ENOB) is typically 15--18 bits due to noise and depends on the ADC configuration (data rate and programmable gain amplifier settings). Please refer to the ADS1220 datasheet for specific performance at different settings. The PGA alone might not provide sufficient amplification for the microvolt-level signals from the full bridge, and external amplification of the bridge output may be necessary before injecting the measurement signal into the ADC.
+
+% ============================================

@@ -1,0 +1,86 @@
+\section{Analysis Sections}
+% ============================================
+
+\subsection{Theory 1: Clamped Boundary Condition}
+
+This theory assumes the oar is clamped at the oarlock position ($x \leq 0$) and a force $F$ is applied at the handle ($x = x_F$). The analysis must account for:
+
+\begin{itemize}
+    \item \textbf{Shaft bending:} Primary deflection of the carbon fiber shaft under applied load
+    \item \textbf{Beam bending:} Secondary deflection of the aluminum measurement beam
+    \item \textbf{System misalignment ($\phi_{\text{mis}}$):} Static angular offset of beam assembly around shaft axis
+    \item \textbf{Beam torsion due to clamping ($\phi_0$):} Initial twist between clamps creating torsional pre-stress
+    \item \textbf{Thermal expansion of beam:} Differential expansion between aluminum beam and carbon shaft (shaft thermal effects assumed negligible)
+    \item \textbf{Beam imperfections:} Manufacturing variations in beam geometry (curvature, thickness)
+    \item \textbf{Buckling potential:} Compressive loads approaching critical buckling load $N_{cr}$
+\end{itemize}
+
+\textbf{[TBD: Detailed analysis with boundary conditions, deflection equations, moment distributions, strain calculations]}
+
+\subsection{Theory 2: Pin Support Boundary Conditions}
+
+This theory assumes the oar is supported by pin supports at the oarlock position ($x = 0$) and at the end of the outboard shaft ($x = -(L_{\text{out}} - L_{\text{blade}})$), with force $F$ applied at the handle ($x = x_F$). The analysis must account for:
+
+\begin{itemize}
+    \item \textbf{Shaft bending:} Primary deflection of the carbon fiber shaft under applied load
+    \item \textbf{Beam bending:} Secondary deflection of the aluminum measurement beam
+    \item \textbf{System misalignment ($\phi_{\text{mis}}$):} Static angular offset of beam assembly around shaft axis
+    \item \textbf{Beam torsion due to clamping ($\phi_0$):} Initial twist between clamps creating torsional pre-stress
+    \item \textbf{Thermal expansion of beam:} Differential expansion between aluminum beam and carbon shaft (shaft thermal effects assumed negligible)
+    \item \textbf{Beam imperfections:} Manufacturing variations in beam geometry (curvature, thickness)
+    \item \textbf{Buckling potential:} Compressive loads approaching critical buckling load $N_{cr}$
+\end{itemize}
+
+\textbf{[TBD: Detailed analysis with boundary conditions, deflection equations, moment distributions, strain calculations]}
+
+\subsection{Sensitivity Analysis}
+
+\subsubsection{Manufacturing Tolerances}
+
+\textbf{[TBD: Effect of beam curvature, dimension variations on strain measurements]}
+
+\subsubsection{Misalignment Effects}
+
+Two types of geometric misalignment affect the measurement system:
+
+\paragraph{System Misalignment ($\phi_{\text{mis}}$)}
+Rotation of the entire beam assembly around the shaft axis (within $\pm 1°$) creates:
+\begin{itemize}
+    \item Static offset in strain gauge readings
+    \item Projection error: measured strain = $\varepsilon_{\text{true}} \cos(\phi_{\text{mis}})$
+    \item For $\phi_{\text{mis}} = 1°$: error $\approx 0.015\%$ (likely negligible)
+\end{itemize}
+
+\textbf{[TBD: Detailed analysis of misalignment effect on bridge output]}
+
+\paragraph{Initial Beam Twist ($\phi_0$)}
+Relative rotation between clamps creates torsional pre-stress in the beam:
+\begin{itemize}
+    \item Direct effect: initial twist angle $\phi_0$
+    \item Thermal amplification: differential thermal expansion increases twist over temperature range
+    \item Coupling with bending: twist may create cross-sensitivity in strain measurements
+\end{itemize}
+
+\textbf{[TBD: Analysis of initial twist and thermal amplification effects]}
+
+\subsubsection{Gauge Positioning Errors}
+
+\textbf{[TBD: Sensitivity to gauge placement accuracy]}
+
+\subsection{Signal Amplification Requirements}
+
+\subsubsection{Expected Strain Levels}
+
+\textbf{[TBD: Calculate expected strains for typical rowing forces]}
+
+\subsubsection{Bridge Output Voltage}
+
+For expected strain $\varepsilon$ and excitation voltage $V_{\text{ex}}$ [TBD]:
+\begin{equation}
+V_{\text{out}} = V_{\text{ex}} \cdot \frac{GF}{2} \cdot (\varepsilon_{\text{top}} - \varepsilon_{\text{bottom}})
+\label{eq:expected_signal}
+\end{equation}
+
+\textbf{[TBD: Determine if amplification is required based on ADC resolution and noise floor]}
+
+% ============================================
