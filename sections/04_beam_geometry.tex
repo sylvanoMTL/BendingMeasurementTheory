@@ -14,7 +14,7 @@ The measurement beam is a rectangular beam attached to the shaft by means of two
 \midrule
 $L_b$ & Beam length (between clamp centers) & \SI{100}{mm} \\
 $h_b$ & Beam height (bending direction, $y$-direction) & \SI{2}{mm} \\
-$b$ & Beam width ($z$-direction) & \SI{10}{\textendash 15}{mm} \\
+$b$ & Beam width ($z$-direction) & \SI{10}{\text{--}15}{mm} \\
 $x_b$ & Beam root position (first clamp) & \SI{200}{mm} \\
 $e_b$ & Beam neutral axis eccentricity from shaft centerline & \SI{20}{mm} \\
 $y_b$ & Beam neutral axis $y$-coordinate & $D_{o,s}/2 + e_b$ \\
@@ -38,21 +38,13 @@ x_{b,1} &= x_b = \SI{200}{mm} \quad \text{(root clamp)} \\
 x_{b,2} &= x_b + L_b = \SI{300}{mm} \quad \text{(tip clamp)}
 \end{align}
 
-\subsection{Beam Second Moment of Area}
-
-For a rectangular cross-section with height $h_b$ (in bending direction, $y$) and width $b$ (perpendicular to bending, $z$):
-\begin{equation}
-I_b = \frac{b h_b^3}{12}
-\label{eq:beam_inertia}
-\end{equation}
-
 \subsection{Clamp Rigidity and Assembly Tolerances}
 
 The clamps are assumed to be \textbf{rigid connections} that prevent relative motion between the beam and shaft at the attachment points. However, two manufacturing and assembly phenomena must be considered:
 
 \subsubsection{System Misalignment}
 
-The entire beam assembly may be rotated around the shaft ($x$-axis) during installation. This misalignment angle, denoted $\phi_{\text{mis}}$, is expected to be within $\pm 1°$. This creates a \textbf{static angular offset} of the entire measurement system, which may result in:
+The entire beam assembly may be rotated around the shaft ($x$-axis) during installation. This misalignment angle, denoted $\phi_{\text{mis}}$, is expected to be within $\pm 1^\circ$. This creates a \textbf{static angular offset} of the entire measurement system, which may result in:
 
 \begin{itemize}
     \item Apparent strain offset in gauge readings

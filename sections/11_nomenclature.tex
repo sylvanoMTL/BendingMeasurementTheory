@@ -14,18 +14,18 @@ To maintain clarity and avoid ambiguity, the following subscript conventions are
 \midrule
 $s$ & Shaft (carbon fiber oar shaft) \\
 $b$ & Beam (aluminum measurement beam) \\
-$g$ & Gauge (strain gauge) \\
-$\text{out}$ & Outboard (blade side, $x < 0$) \\
-$\text{in}$ & Inboard (handle side, $x > 0$) \\
-$\text{top}$ & Top surface of beam ($y = y_b + h_b/2$) \\
-$\text{bottom}$ & Bottom surface of beam ($y = y_b - h_b/2$) \\
-$\text{thermal}$ & Thermal component \\
-$\text{mech}$ & Mechanical component \\
+$\text{top}$ & Top surface of beam (tension side under downward handle load) \\
+$\text{bottom}$ & Bottom surface of beam (compression side under downward handle load) \\
+$\text{th}$ & Thermal component (differential expansion) \\
+$\text{mech}$ & Mechanical component (bending) \\
+$\text{off}$ & Offset component (assembly and electronics) \\
+$\text{meas}$ & Measured quantity inferred from bridge/ADC \\
+$x, y, z$ & Cartesian coordinates / components \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Complete Nomenclature}
+\subsection{Nomenclature}
 
 \begin{table}[ht]
 \centering
@@ -66,33 +66,10 @@ $\nu_s$ & Poisson's ratio of shaft & -- \\
 $\nu_b$ & Poisson's ratio of beam & -- \\
 $\alpha_s$ & Thermal expansion coefficient of shaft & K$^{-1}$ \\
 $\alpha_b$ & Thermal expansion coefficient of beam & K$^{-1}$ \\
-$\rho_s$ & Density of shaft & kg/m$^3$ \\
-$\rho_b$ & Density of beam & kg/m$^3$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[ht]
-\centering
-\caption{Nomenclature - Mechanical variables}
-\begin{tabular}{lll}
-\toprule
-\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
-\midrule
-$F$ & Applied force at handle & N \\
-$V_s(x)$ & Shear force in shaft & N \\
-$V_b(x)$ & Shear force in beam & N \\
-$M_s(x)$ & Bending moment in shaft & N·mm \\
-$M_b(x)$ & Bending moment in beam & N·mm \\
-$w_s(x)$ & Vertical deflection of shaft & mm \\
-$w_b(x)$ & Vertical deflection of beam & mm \\
-$\theta_s(x)$ & Rotation angle of shaft about $z$-axis (bending) & rad \\
-$\theta_b(x)$ & Rotation angle of beam about $z$-axis (bending) & rad \\
-$\phi_s(x)$ & Rotation angle of shaft about $x$-axis (torsion) & rad \\
-$\phi_b(x)$ & Rotation angle of beam about $x$-axis (torsion) & rad \\
 $I_s$ & Second moment of area of shaft & mm$^4$ \\
 $I_b$ & Second moment of area of beam & mm$^4$ \\
-$\varepsilon(x,y)$ & Strain at position $(x,y)$ & -- \\
+$\varepsilon_{\text{mech}}(x,y)$ & Mechanical bending strain at position $(x,y)$ & -- \\
+$\varepsilon(x,y)$ & Strain at position $(x,y)$ (when context is clear) & -- \\
 $\sigma(x,y)$ & Stress at position $(x,y)$ & MPa \\
 \bottomrule
 \end{tabular}
@@ -109,8 +86,8 @@ $R_g$ & Strain gauge nominal resistance & $\Omega$ \\
 $GF$ & Gauge factor & -- \\
 $R_1, R_2$ & Top surface gauge resistances & $\Omega$ \\
 $R_3, R_4$ & Bottom surface gauge resistances & $\Omega$ \\
-$\varepsilon_{\text{top}}$ & Strain on top surface & -- \\
-$\varepsilon_{\text{bottom}}$ & Strain on bottom surface & -- \\
+$\varepsilon_{\text{top}}$ & Strain on top surface (total strain at gauges $R_1$ and $R_2$) & -- \\
+$\varepsilon_{\text{bottom}}$ & Strain on bottom surface (total strain at gauges $R_3$ and $R_4$) & -- \\
 $V_{\text{ex}}$ & Bridge excitation voltage & V \\
 $V_{\text{out}}$ & Bridge output voltage & V \\
 $\Delta R$ & Change in gauge resistance & $\Omega$ \\
@@ -133,8 +110,27 @@ LSB & Least significant bit voltage & $\mu$V \\
 $T$ & Temperature & \si{\degreeCelsius} \\
 $T_0$ & Reference temperature & \si{\degreeCelsius} \\
 $\Delta T$ & Temperature change & K \\
-$\varepsilon_{\text{thermal}}$ & Thermal strain & -- \\
-$\Delta L_{\text{thermal}}$ & Thermal expansion & mm \\
+$\Delta \alpha$ & Difference in thermal expansion coefficients & K$^{-1}$ \\
+$\varepsilon_{\text{thermal}}$ & Simplified thermal strain due to $\Delta \alpha \Delta T$ & -- \\
+$\Delta L_{\text{thermal}}$ & Differential thermal expansion & mm \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Nomenclature - Strain components and measurement model}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$\varepsilon_{\text{total}}$ & Total axial strain at a gauge location & -- \\
+$\varepsilon_{\text{mech}}$ & Mechanical bending strain component & -- \\
+$\varepsilon_{\text{th}}$ & Thermal strain component (differential expansion) & -- \\
+$\varepsilon_{\text{off}}$ & Offset strain (assembly and electronics effects) & -- \\
+$\varepsilon_{\text{meas}}$ & Strain inferred from bridge output and calibration & -- \\
+$A_T(T)$ & Temperature-dependent mechanical strain amplification factor & -- \\
+$k_T$ & Linear thermal amplification coefficient & K$^{-1}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
