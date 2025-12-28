@@ -1,0 +1,216 @@
+\section{Theoretical Framework}
+% ============================================
+
+This section presents the theoretical foundations for analyzing the measurement system, including mechanical bending, thermal effects, geometric imperfections, and stability considerations.
+
+\subsection{Strain Decomposition and Measurement Model}
+\label{sec:strain_decomposition}
+
+At each strain gauge location, the total axial strain is decomposed into three contributions:
+\begin{equation}
+\varepsilon_{\text{total}}(T,F)
+=
+\varepsilon_{\text{mech}}(T,F)
++
+\varepsilon_{\text{th}}(T)
++
+\varepsilon_{\text{off}}(T),
+\label{eq:strain_decomposition}
+\end{equation}
+where:
+\begin{itemize}
+  \item $\varepsilon_{\text{mech}}(T,F)$ is the \emph{mechanical} bending strain due to the applied load $F$; in the absence of bending ($F = 0$) this term is taken to be zero,
+  \item $\varepsilon_{\text{th}}(T)$ is the \emph{thermal} strain caused by constrained differential expansion between the aluminum beam and the carbon shaft,
+  \item $\varepsilon_{\text{off}}(T)$ is an \emph{offset} strain term that groups additional effects such as assembly pre-stress, imperfect bonding, twist misalignment, and electronics zero-shift.
+\end{itemize}
+
+The strain inferred from the bridge output after calibration is denoted by $\varepsilon_{\text{meas}}(T,F)$. In general it does not coincide exactly with the purely mechanical component, because temperature influences both the mechanical response and the measurement system. Sections~\ref{sec:beam_bending_theory}--\ref{sec:thermal_effects} derive $\varepsilon_{\text{mech}}(T,F)$ and $\varepsilon_{\text{th}}(T)$, while Section~\ref{sec:thermal_amplification} introduces a parametric model for $\varepsilon_{\text{meas}}(T,F)$ and $\varepsilon_{\text{off}}(T)$.
+
+\subsection{Beam Bending Theory}
+\label{sec:beam_bending_theory}
+
+The measurement system relies on Euler-Bernoulli beam theory to relate applied forces to measurable strains.
+
+\subsubsection{Governing Equation}
+
+For a beam subject to transverse loading:
+\begin{equation}
+EI \frac{d^4w}{dx^4} = q(x)
+\label{eq:beam_equation}
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $E$ is the Young's modulus,
+    \item $I$ is the second moment of area,
+    \item $w(x)$ is the transverse deflection,
+    \item $q(x)$ is the distributed transverse load.
+\end{itemize}
+
+Under typical rowing operation, the dominant loading is due to the handle force applied at the inboard end of the oar, resulting in bending of both the carbon shaft and the aluminum measurement beam.
+
+\subsubsection{Moment-Curvature Relation}
+
+For small deflections and linear elastic behavior, the bending moment $M(x)$ is related to curvature:
+\begin{equation}
+M(x) = -EI \frac{d^2w}{dx^2}
+\label{eq:moment_curvature}
+\end{equation}
+
+\subsubsection{Strain-Displacement Relation}
+
+For a beam in pure bending, the longitudinal \emph{mechanical} strain at distance $y$ from the neutral axis is:
+\begin{equation}
+\varepsilon_{\text{mech}}(x,y) = -y \frac{d^2w}{dx^2} = \frac{M(x) \cdot y}{EI}
+\label{eq:strain_displacement}
+\end{equation}
+
+Note the sign convention: positive $M$ causes compression on the top surface ($y > 0$).
+
+\subsubsection{Second Moment of Area}
+
+For a rectangular cross-section (beam):
+\begin{equation}
+I_b = \frac{b h_b^3}{12}
+\label{eq:beam_inertia}
+\end{equation}
+where $b$ is the beam width and $h_b$ is the beam height.
+
+For a hollow circular cross-section (shaft):
+\begin{equation}
+I_s = \frac{\pi}{64}\left(D_{o,s}^4 - D_{i,s}^4\right)
+\label{eq:shaft_inertia}
+\end{equation}
+
+\subsubsection{Boundary Conditions}
+
+The exact form of $w(x)$ depends on the boundary conditions at the oarlock and at the handle. In this specification, two theoretical boundary conditions are considered:
+\begin{itemize}
+    \item \textbf{Theory 1:} Clamped boundary condition at the oarlock, with the handle modeled as a point load.
+    \item \textbf{Theory 2:} Pin support boundary conditions at the oarlock and handle, approximating more flexible support conditions.
+\end{itemize}
+
+The detailed solutions for $w(x)$ for each theory are derived in Section~\ref{sec:mechanical_strains}.
+
+\subsection{Thermal Effects}
+\label{sec:thermal_effects}
+
+\subsubsection{Differential Thermal Expansion}
+
+The aluminum beam and carbon shaft have significantly different thermal expansion coefficients:
+\begin{align}
+\alpha_b &= \SI{23.6e-6}{K^{-1}} \quad \text{(Aluminum 1050)} \\
+\alpha_s &= \SI{-0.5e-6}{K^{-1}} \quad \text{(Carbon fiber, approximate)}
+\end{align}
+
+When constrained together by the clamping system, differential thermal expansion generates internal forces and moments. The free thermal elongation of beam and shaft over length $L_b$ would be:
+\begin{align}
+\Delta L_b &= \alpha_b L_b \Delta T \\
+\Delta L_s &= \alpha_s L_b \Delta T
+\end{align}
+
+The differential free expansion is:
+\begin{equation}
+\Delta L_{\text{thermal}} = (\alpha_b - \alpha_s) L_b \Delta T = \Delta \alpha \, L_b \Delta T
+\label{eq:differential_expansion}
+\end{equation}
+with:
+\begin{equation}
+\Delta \alpha = \alpha_b - \alpha_s
+\end{equation}
+
+If the beam and shaft are perfectly constrained, the differential expansion is converted into internal axial force $N_{\text{th}}$ and bending moments, resulting in a thermal strain component $\varepsilon_{\text{th}}(T)$ at the gauge location. A simplified axial thermal strain (if fully constrained) would be:
+\begin{equation}
+\varepsilon_{\text{thermal}} = \Delta \alpha \, \Delta T
+\label{eq:thermal_strain_simple}
+\end{equation}
+which, in the context of Eq.~\eqref{eq:strain_decomposition}, represents the thermal component $\varepsilon_{\text{th}}(T)$.
+
+\subsubsection{Clamp-Induced Assembly Strain}
+
+Clamp tightening can introduce additional pre-stress and twist. These effects are lumped into the offset strain term $\varepsilon_{\text{off}}(T)$ in Eq.~\eqref{eq:strain_decomposition}. While some of these effects may be approximately temperature-independent, differential thermal expansion can amplify twist and pre-stress, causing $\varepsilon_{\text{off}}(T)$ to vary with $T$.
+
+\subsubsection{Thermal Amplification}
+\label{sec:thermal_amplification}
+
+Temperature variations do not only induce direct thermal expansion; they also modify material properties, clamp stiffness, and the effective geometry of the assembly. These effects can be captured phenomenologically as an effective change in both the measurement gain and offset.
+
+Building on the decomposition in Eq.~\eqref{eq:strain_decomposition}, the measured strain at temperature $T$ and load $F$ is expressed as:
+\begin{equation}
+\varepsilon_{\text{meas}}(T,F)
+=
+A_T(T)\,\varepsilon_{\text{mech}}(T,F)
++
+\varepsilon_{\text{th}}(T)
++
+\varepsilon_{\text{off}}(T)
+\label{eq:thermal_amplification_general}
+\end{equation}
+where:
+\begin{itemize}
+  \item $\varepsilon_{\text{mech}}(T,F)$ is the mechanical bending strain component defined in Eq.~\eqref{eq:strain_decomposition},
+  \item $A_T(T)$ is a dimensionless thermal amplification factor,
+  \item $\varepsilon_{\text{th}}(T)$ is the thermal strain component due to differential expansion,
+  \item $\varepsilon_{\text{off}}(T)$ is a temperature-dependent offset caused by assembly pre-stress, twist amplification, and residual electronics effects.
+\end{itemize}
+
+For small excursions around the reference temperature $T_0$, the amplification factor may be linearized as:
+\begin{equation}
+A_T(T)
+\approx
+1 + k_T\,(T - T_0)
+\label{eq:thermal_gain_linear}
+\end{equation}
+where $k_T$ [K$^{-1}$] is an effective thermal amplification coefficient to be obtained from calibration.
+
+The linear approximation in Eq.~\eqref{eq:thermal_gain_linear} assumes that higher-order terms in $(T-T_0)$ are negligible, which is appropriate for modest temperature excursions where:
+\begin{equation}
+|T - T_0| \ll \frac{1}{|k_T|}
+\label{eq:thermal_validity}
+\end{equation}
+
+In the context of this system, the validity of the linear model must be verified experimentally during thermal calibration. If necessary, additional higher-order terms in temperature may be introduced.
+
+Substituting Eq.~\eqref{eq:thermal_gain_linear} into Eq.~\eqref{eq:thermal_amplification_general} gives:
+\begin{equation}
+\varepsilon_{\text{meas}}(T,F)
+\approx
+\left[1 + k_T\,(T - T_0)\right]\varepsilon_{\text{mech}}(T,F)
++
+\varepsilon_{\text{th}}(T)
++
+\varepsilon_{\text{off}}(T)
+\label{eq:thermal_amplification_final}
+\end{equation}
+
+Equation~\eqref{eq:thermal_amplification_final} shows that thermal effects contribute an effective gain variation on the mechanical strain measurement in addition to an additive temperature-dependent bias. Both $k_T$ and the behavior of $\varepsilon_{\text{off}}(T)$ must be determined experimentally during calibration.
+
+\subsection{Stability and Buckling Considerations}
+
+Under compression, the aluminum beam may approach Euler buckling limits. The classical critical load for a prismatic column is:
+\begin{equation}
+N_{\text{cr}} = \frac{\pi^2 E_b I_b}{(K L_b)^2}
+\label{eq:euler_buckling}
+\end{equation}
+where:
+\begin{itemize}
+    \item $N_{\text{cr}}$ is the critical buckling load,
+    \item $E_b$ is the Young's modulus of the beam,
+    \item $I_b$ is the second moment of area of the beam,
+    \item $L_b$ is the effective length of the beam,
+    \item $K$ is the effective length factor (depends on end conditions).
+\end{itemize}
+
+In this system, the beam is clamped at both ends via the clamping system. A conservative estimate is to take $K \approx 0.7$--$1.0$ depending on the rotational stiffness of the clamps.
+
+The combined thermal and assembly loads must remain well below $N_{\text{cr}}$ across the full operating temperature range:
+\begin{equation}
+N = N_{\text{th}} + N_{\text{assy}} < \eta \, N_{\text{cr}}
+\end{equation}
+with a safety factor $\eta$ (e.g., $\eta = 0.5$).
+
+\textbf{[TBD: Verification that $N = N_{\text{th}} + N_{\text{assy}} < 0.5 N_{\text{cr}}$ for operating temperature range]}
+
+\textbf{[TBD: Verification of stability criteria for operating temperature range]}
+
+% ============================================

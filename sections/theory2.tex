@@ -1,0 +1,51 @@
+\subsection{Theory 2: Pin Support Boundary Conditions}
+% ============================================
+\label{sec:theory2}
+
+\subsubsection{Boundary Conditions}
+
+Theory 2 assumes the following boundary conditions with pin supports at two locations:
+
+\begin{itemize}
+    \item \textbf{At the oarlock} ($x = 0$): Pin support prevents displacement but allows rotation:
+    \begin{align}
+    w_s(0) &= 0 \quad \text{(no vertical displacement)} \\
+    M_s(0) &= 0 \quad \text{(no moment, pin allows rotation)}
+    \end{align}
+    
+    \item \textbf{At the end of outboard shaft} ($x = -(L_{\text{out}} - L_{\text{blade}}) = -1570$ mm): Pin support prevents displacement but allows rotation:
+    \begin{align}
+    w_s(-(L_{\text{out}} - L_{\text{blade}})) &= 0 \quad \text{(no vertical displacement)} \\
+    M_s(-(L_{\text{out}} - L_{\text{blade}})) &= 0 \quad \text{(no moment, pin allows rotation)}
+    \end{align}
+    
+    \item \textbf{At the handle} ($x = x_F$): A vertical force $F$ is applied, with no moment:
+    \begin{align}
+    V_s(x_F) &= -F \quad \text{(applied shear force)} \\
+    M_s(x_F) &= 0 \quad \text{(free end, no moment)}
+    \end{align}
+\end{itemize}
+
+See Figure~\ref{fig:theory2_boundary_conditions} for a visual representation of the boundary conditions.
+
+\subsubsection{Deflection Solution}
+
+\textbf{[TBD: Derivation of deflection $w_s(x)$ for beam with two pin supports and point load]}
+
+\subsubsection{Moment Distribution}
+
+\textbf{[TBD: Calculation of bending moment $M_s(x)$ along the shaft]}
+
+\subsubsection{Reaction Forces}
+
+\textbf{[TBD: Calculation of reaction forces at the two pin support locations]}
+
+\subsubsection{Strain at Beam Location}
+
+\textbf{[TBD: Calculation of mechanical strain $\varepsilon_{\text{mech}}$ at the beam gauge locations]}
+
+\subsubsection{Numerical Example}
+
+\textbf{[TBD: Numerical example with typical force values]}
+
+% ============================================

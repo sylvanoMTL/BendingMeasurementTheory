@@ -1,0 +1,20 @@
+\section{Calculation of Mechanical Strains}
+% ============================================
+\label{sec:mechanical_strains}
+
+This section presents detailed calculations of the mechanical bending strains $\varepsilon_{\text{mech}}(x,y)$ for the measurement beam under two different boundary condition assumptions. These calculations provide the theoretical basis for interpreting strain gauge measurements and understanding the relationship between applied forces and measured strains.
+
+The mechanical strain component $\varepsilon_{\text{mech}}(T,F)$ defined in Eq.~\eqref{eq:strain_decomposition} is derived from classical beam theory applied to the specific geometry and loading conditions of the rowing oar system. Two theoretical models are considered to bracket the range of expected behavior:
+
+\begin{itemize}
+    \item \textbf{Theory 1 (Section~\ref{sec:theory1}):} Assumes a clamped boundary condition at the oarlock, representing a rigid constraint.
+    \item \textbf{Theory 2 (Section~\ref{sec:theory2}):} Assumes pin support boundary conditions at both the oarlock and at the end of the outboard shaft, representing a more flexible support system.
+\end{itemize}
+
+Both theories use the same fundamental beam equations (Section~\ref{sec:beam_bending_theory}) but differ in their boundary conditions, leading to different deflection profiles $w(x)$ and consequently different strain distributions along the beam.
+
+% Include subsections for Theory 1 and Theory 2
+\input{sections/theory1}
+\input{sections/theory2}
+
+% ============================================

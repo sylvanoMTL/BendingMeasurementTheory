@@ -1,0 +1,93 @@
+\section{Analysis and Calibration Results}
+% ============================================
+\label{sec:analysis}
+
+This section presents the calibration results obtained from mechanical loading and thermal characterization experiments. The goal is to determine the coefficients that relate the measured strain $\varepsilon_{\text{meas}}(T,F)$ to the mechanical strain $\varepsilon_{\text{mech}}(T,F)$ while accounting for thermal and offset contributions as defined in Eq.~\eqref{eq:strain_decomposition}.
+
+\subsection{Mechanical Calibration}
+\label{sec:analysis_mechanical}
+
+During mechanical calibration, the oar was held at approximately constant temperature $T \approx T_0$, such that:
+\begin{equation}
+\varepsilon_{\text{th}}(T_0) + \varepsilon_{\text{off}}(T_0) \approx 0
+\end{equation}
+
+Thus, Eq.~\eqref{eq:thermal_amplification_final} simplifies to:
+\begin{equation}
+\varepsilon_{\text{meas}}(T_0,F)
+\approx
+\varepsilon_{\text{mech}}(T_0,F)
+\label{eq:mechanical_calibration_relation}
+\end{equation}
+
+The calibration curve $\varepsilon_{\text{meas}}$ vs.\ applied force $F$ exhibits a strong linear correlation. A first-order model was fitted:
+\begin{equation}
+\varepsilon_{\text{meas}}(T_0,F) = C_F \cdot F
+\end{equation}
+with calibration factor $C_F$ [\si{\microstrain\per\newton}] representing the mechanical sensitivity at $T_0$.
+
+This establishes the baseline mechanical response contribution to Eq.~\eqref{eq:thermal_amplification_final}.
+
+\subsection{Thermal Characterization}
+\label{sec:analysis_thermal}
+
+With the oar unloaded ($F = 0$), Eq.~\eqref{eq:thermal_amplification_final} becomes:
+\begin{equation}
+\varepsilon_{\text{meas}}(T,0)
+=
+\varepsilon_{\text{th}}(T)
++
+\varepsilon_{\text{off}}(T)
+\label{eq:thermal_characterization_equation}
+\end{equation}
+
+The measured output over temperature therefore reveals a combination of thermal expansion effects (predictable) and assembly/electronics offsets (less predictable). A linear model was fitted to $\varepsilon_{\text{meas}}(T,0)$ to estimate the dominant temperature-dependent trend:
+\begin{equation}
+\varepsilon_{\text{meas}}(T,0)
+\approx
+k_0
++
+k_{\text{off}}(T - T_0)
+\end{equation}
+where:
+\begin{itemize}
+    \item $k_0$ is the residual strain at the reference temperature $T_0$,
+    \item $k_{\text{off}}$ captures the dominant linear temperature dependence of the offset.
+\end{itemize}
+
+These coefficients contribute to modeling $\varepsilon_{\text{off}}(T)$ in Eq.~\eqref{eq:thermal_amplification_final}.
+
+\subsection{Joint Temperature and Load Influence}
+\label{sec:analysis_joint}
+
+When both temperature changes and mechanical loads occur simultaneously, the measured strain follows:
+\begin{equation}
+\varepsilon_{\text{meas}}(T,F)
+\approx
+\left[1 + k_T\,(T - T_0)\right] C_F\, F
++
+\varepsilon_{\text{th}}(T)
++
+\varepsilon_{\text{off}}(T)
+\end{equation}
+
+The parameter $k_T$ was extracted from controlled tests where load was applied at different temperatures. A linear regression on the gain variation yielded:
+\[
+A_T(T) \approx 1 + k_T (T - T_0)
+\]
+allowing the separation of:
+\begin{itemize}
+    \item mechanical gain variation with temperature (via $k_T$)
+    \item additive thermal and offset effects (via $\varepsilon_{\text{th}}$ and $\varepsilon_{\text{off}}$)
+\end{itemize}
+
+\subsection{Discussion}
+
+The results demonstrate that:
+\begin{itemize}
+    \item The \textbf{mechanical calibration} is linear and stable near $T_0$.
+    \item The \textbf{thermal characterization} reveals a temperature-dependent offset that must be compensated.
+    \item A \textbf{joint thermo-mechanical model} is required to ensure accuracy across realistic operating temperatures.
+\end{itemize}
+
+To enable reliable performance during on-water operation, the coefficients $C_F$, $k_T$ and the characterization of $\varepsilon_{\text{off}}(T)$ must be incorporated into a real-time compensation algorithm.
