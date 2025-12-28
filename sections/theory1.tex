@@ -1,41 +1,215 @@
-\subsection{Theory 1: Clamped Boundary Condition at Oarlock}
-% ============================================
+\subsection{Theory 1: Clamped Oarlock and Local Surface Strain}
 \label{sec:theory1}
 
-\subsubsection{Boundary Conditions}
+Theory~1 models the oar shaft as a uniform Euler--Bernoulli beam of length $x_F$
+(clamped at the oarlock and free at the handle) with a transverse point load $F$
+applied at $x = x_F$ during the drive phase. The aluminum measurement beam is
+treated purely as a kinematic attachment that places the strain gauges at a
+known distance from the shaft neutral axis. All strains derived in this section
+are therefore \emph{purely mechanical bending strains} arising from the global
+bending of the shaft.
 
-Theory 1 assumes the following boundary conditions:
+Thermal and assembly contributions are handled separately in
+Section~\ref{sec:theoretical_framework}.
 
+\subsubsection{Shaft model and boundary conditions}
+
+We consider the inboard shaft segment $0 \le x \le x_F$ with the following
+boundary conditions at the oarlock and handle:
 \begin{itemize}
-    \item \textbf{At the oarlock} ($x = 0$): The oar shaft is clamped, preventing both displacement and rotation:
-    \begin{align}
-    w_s(0) &= 0 \quad \text{(no transverse displacement)} \\
-    \theta_s(0) &= 0 \quad \text{(no rotation, clamped)}
-    \end{align}
-    
-    \item \textbf{At the handle} ($x = x_F$): A transverse force $F$ is applied, with no moment:
-    \begin{align}
-    V_s(x_F) &= -F \quad \text{(applied shear force)} \\
-    M_s(x_F) &= 0 \quad \text{(free end, no moment)}
-    \end{align}
+  \item Clamped at the oarlock ($x = 0$):
+  \begin{align}
+    w_s(0) &= 0 && \text{(zero transverse displacement)}, \\
+    \theta_s(0) = \left.\frac{\mathrm{d}w_s}{\mathrm{d}x}\right|_{x=0} &= 0
+      && \text{(zero rotation)}.
+  \end{align}
+  \item Free at the handle ($x = x_F$), with a transverse force of magnitude $F$:
+  \begin{align}
+    V_s(x_F) &= F && \text{(shear force)}, \\
+    M_s(x_F) &= 0 && \text{(zero bending moment)}.
+  \end{align}
 \end{itemize}
 
-See Figure~\ref{fig:theory1_boundary_conditions} for a visual representation of the boundary conditions.
+The shaft has bending stiffness $E_s I_s$, with $E_s$ and $I_s$ as defined in
+Table~\ref{tab:nomenclature_material} and Eq.~(16).
 
-\subsubsection{Deflection Solution}
+\subsubsection{Bending moment, curvature and deflection of the shaft}
 
-\textbf{[TBD: Derivation of deflection $w_s(x)$ for clamped-free beam with point load]}
+For a prismatic cantilever of length $x_F$ with a tip load $F$, the internal
+bending moment distribution is
+\begin{equation}
+  M_s(x) = F\,(x_F - x), \qquad 0 \le x \le x_F.
+  \label{eq:theory1_Mx}
+\end{equation}
+The maximum moment occurs at the clamped oarlock:
+\begin{equation}
+  M_s(0) = F x_F.
+\end{equation}
 
-\subsubsection{Moment Distribution}
+The curvature of the shaft in the $x$--$y$ bending plane follows directly from
+the Euler--Bernoulli relation
+\begin{equation}
+  \kappa_s(x) = \frac{\mathrm{d}^2 w_s}{\mathrm{d}x^2}
+              = \frac{M_s(x)}{E_s I_s}
+              = \frac{F\,(x_F - x)}{E_s I_s}.
+  \label{eq:theory1_curvature}
+\end{equation}
 
-\textbf{[TBD: Calculation of bending moment $M_s(x)$ along the shaft]}
+Integrating twice with the clamped boundary conditions at $x = 0$ yields the
+standard cantilever expressions
+\begin{align}
+  \theta_s(x) &= \frac{\mathrm{d}w_s}{\mathrm{d}x}
+  = -\frac{F}{2 E_s I_s}\,\bigl(2 x_F x - x^2\bigr), \\
+  w_s(x) &=
+  -\frac{F}{6 E_s I_s}\,x^2\,\bigl(3 x_F - x\bigr).
+\end{align}
+The maximum deflection at the handle is therefore
+\begin{equation}
+  w_s(x_F) = -\frac{F x_F^3}{3 E_s I_s}.
+\end{equation}
 
-\subsubsection{Strain at Beam Location}
+\subsubsection{Mechanical strain at an arbitrary shaft fibre}
 
-\textbf{[TBD: Calculation of mechanical strain $\varepsilon_{\text{mech}}$ at the beam gauge locations]}
+For small strains, the mechanical bending strain at a material fibre located a
+distance $y$ from the shaft neutral axis (positive in the $+y$ direction) is
+\begin{equation}
+  \varepsilon_{\text{mech},s}(x,y)
+  = \kappa_s(x)\,y
+  = \frac{M_s(x)\,y}{E_s I_s}
+  = \frac{F\,(x_F - x)\,y}{E_s I_s}.
+  \label{eq:theory1_eps_generic}
+\end{equation}
+This expression is the core result: once the gauge position $(x,y)$ is known
+relative to the shaft centreline, the local mechanical strain due to an applied
+handle force $F$ follows directly.
 
-\subsubsection{Numerical Example}
+\subsubsection{Gauge locations and effective radius}
 
-\textbf{[TBD: Numerical example with typical force values]}
+The aluminum measurement beam is attached to the shaft by two clamps located at
+\begin{align}
+  x_{b,1} &= x_b, \\
+  x_{b,2} &= x_b + L_b,
+\end{align}
+as defined in Table~\ref{tab:beam_dimensions}.
+The four strain gauges are located at midspan of the beam,
+\begin{equation}
+  x_\text{gauge} = x_b + \frac{L_b}{2},
+\end{equation}
+so the relevant shaft curvature is $\kappa_s(x_\text{gauge})$.
 
-% ============================================
+In the radial ($y$) direction, the beam neutral axis lies at
+\begin{equation}
+  y_b = \frac{D_{o,s}}{2} + e_b,
+\end{equation}
+measured from the shaft centreline (see Eq.~(1)). The top and bottom gauge
+fibres are located symmetrically about this neutral axis at
+\begin{align}
+  y_\text{top}    &= y_b + \frac{h_b}{2}, \\
+  y_\text{bottom} &= y_b - \frac{h_b}{2}.
+\end{align}
+
+\subsubsection{Mechanical strain at the gauge locations}
+
+Evaluating Eq.~\eqref{eq:theory1_eps_generic} at the gauge station
+$x = x_\text{gauge}$ gives
+\begin{equation}
+  \kappa_s(x_\text{gauge})
+  = \frac{F\,(x_F - x_\text{gauge})}{E_s I_s}.
+\end{equation}
+The purely mechanical bending strains at the top and bottom gauge fibres are
+then
+\begin{align}
+  \varepsilon_\text{top}(F)
+  &= \kappa_s(x_\text{gauge})\,y_\text{top}
+   = \frac{F\,(x_F - x_\text{gauge})\,y_\text{top}}{E_s I_s},
+   \label{eq:theory1_eps_top} \\
+  \varepsilon_\text{bottom}(F)
+  &= \kappa_s(x_\text{gauge})\,y_\text{bottom}
+   = \frac{F\,(x_F - x_\text{gauge})\,y_\text{bottom}}{E_s I_s}.
+   \label{eq:theory1_eps_bottom}
+\end{align}
+
+The bridge differential strain component is the difference between these two:
+\begin{equation}
+  \Delta\varepsilon(F)
+  = \varepsilon_\text{top}(F) - \varepsilon_\text{bottom}(F)
+  = \kappa_s(x_\text{gauge})\,(y_\text{top} - y_\text{bottom})
+  = \kappa_s(x_\text{gauge})\,h_b.
+  \label{eq:theory1_deps}
+\end{equation}
+Notably, the \emph{differential} mechanical strain driving the full bridge
+output is \emph{independent} of the beam eccentricity $y_b$; it depends only on
+the local curvature and beam thickness $h_b$.
+
+In contrast, the \emph{absolute} (common-mode) strains at the gauge locations
+scale with the eccentricity $y_b$:
+\begin{equation}
+  \varepsilon_\text{cm}(F)
+  \approx \kappa_s(x_\text{gauge})\,y_b,
+\end{equation}
+which must remain within the strain gauge specification.
+
+\subsubsection{Bridge response (mechanical contribution)}
+
+Using the full-bridge configuration defined in Section~\ref{sec:bridge_configuration},
+and for small strains, the normalized bridge output is
+\begin{equation}
+  \frac{V_\text{out}}{V_\text{ex}}
+  = \frac{GF}{2}\,\bigl(\varepsilon_\text{top} - \varepsilon_\text{bottom}\bigr)
+  = \frac{GF}{2}\,\Delta\varepsilon(F),
+\end{equation}
+with $\Delta\varepsilon(F)$ given by Eq.~\eqref{eq:theory1_deps}. Combining
+Eqs.~\eqref{eq:theory1_curvature} and~\eqref{eq:theory1_deps}, the purely
+mechanical bridge strain is therefore
+\begin{equation}
+  \Delta\varepsilon(F)
+  = \frac{F\,(x_F - x_\text{gauge})\,h_b}{E_s I_s}.
+  \label{eq:theory1_deps_final}
+\end{equation}
+
+\subsubsection{Numerical example}
+
+Using the geometric and material parameters in
+Tables~\ref{tab:shaft_dimensions}--\ref{tab:beam_dimensions}:
+\begin{align}
+  x_F &= 900~\text{mm}, &
+  x_b &= 200~\text{mm}, &
+  L_b &= 100~\text{mm}, \\
+  h_b &= 2~\text{mm}, &
+  D_{o,s} &= 38~\text{mm}, &
+  e_b &= 20~\text{mm}, \\
+  E_s &= 140~\text{GPa}, &
+  I_s &= 50\,956~\text{mm}^4,
+\end{align}
+and the peak handle force $F = 1962~\text{N}$, we have
+\begin{align}
+  x_\text{gauge} &= x_b + \frac{L_b}{2} = 250~\text{mm}, \\
+  y_b &= \frac{D_{o,s}}{2} + e_b = 39~\text{mm}, \\
+  y_\text{top} &= 40~\text{mm}, \qquad
+  y_\text{bottom} = 38~\text{mm}.
+\end{align}
+The shaft curvature at the gauge station is
+\begin{equation}
+  \kappa_s(x_\text{gauge})
+  = \frac{F\,(x_F - x_\text{gauge})}{E_s I_s}
+  \approx 0.179~\text{m}^{-1},
+\end{equation}
+yielding the mechanical strains
+\begin{align}
+  \varepsilon_\text{top}
+  &\approx 7.2 \times 10^{-3} = 7\,160~\mu\varepsilon, \\
+  \varepsilon_\text{bottom}
+  &\approx 6.8 \times 10^{-3} = 6\,800~\mu\varepsilon, \\
+  \Delta\varepsilon
+  &= \varepsilon_\text{top} - \varepsilon_\text{bottom}
+   \approx 3.6 \times 10^{-4}
+   = 360~\mu\varepsilon.
+\end{align}
+
+In this formulation, the large absolute strains at the gauge locations are
+recognized as \emph{true mechanical bending strains} at the eccentric radius
+$y_b$, while the full-bridge output is driven by the differential component
+$\Delta\varepsilon(F)$ given by Eq.~\eqref{eq:theory1_deps_final}. Comparison
+of these theoretical values with the calibrated sensitivity in
+Section~\ref{sec:mechanical_calibration} provides a direct check on the
+effective gauge radius and clamp stiffness.
