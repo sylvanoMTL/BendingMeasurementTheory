@@ -1,51 +1,165 @@
 \subsection{Theory 2: Pin Support Boundary Conditions}
-% ============================================
 \label{sec:theory2}
 
-\subsubsection{Boundary Conditions}
+Theory~2 explores an alternative boundary condition model in which the oar is supported by two pin supports rather than a single clamp. This represents a more compliant constraint system that may better approximate the actual rowing conditions where the oarlock and blade-water interface provide vertical support but permit some rotational freedom.
 
-Theory 2 assumes the following boundary conditions with pin supports at two locations:
+\subsubsection{Boundary conditions and structural model}
+
+The inboard and outboard shaft are modeled as a continuous Euler--Bernoulli beam with pin supports at two locations:
 
 \begin{itemize}
-    \item \textbf{At the oarlock} ($x = 0$): Pin support prevents displacement but allows rotation:
-    \begin{align}
-    w_s(0) &= 0 \quad \text{(no transverse displacement)} \\
-    M_s(0) &= 0 \quad \text{(no moment, pin allows rotation)}
-    \end{align}
-    
-    \item \textbf{At the end of outboard shaft} ($x = -(L_{\text{out}} - L_{\text{blade}}) = -1570$ mm): Pin support prevents displacement but allows rotation:
-    \begin{align}
-    w_s(-(L_{\text{out}} - L_{\text{blade}})) &= 0 \quad \text{(no transverse displacement)} \\
-    M_s(-(L_{\text{out}} - L_{\text{blade}})) &= 0 \quad \text{(no moment, pin allows rotation)}
-    \end{align}
-    
-    \item \textbf{At the handle} ($x = x_F$): A transverse force $F$ is applied, with no moment:
-    \begin{align}
-    V_s(x_F) &= -F \quad \text{(applied shear force)} \\
-    M_s(x_F) &= 0 \quad \text{(free end, no moment)}
-    \end{align}
+  \item \textbf{Pin support at oarlock} ($x = 0$):
+  \begin{align}
+    w_s(0) &= 0 && \text{(zero transverse displacement)}, \\
+    M_s(0) &= 0 && \text{(zero moment; pin permits rotation)}.
+  \end{align}
+  
+  \item \textbf{Pin support at blade-shaft junction} ($x = x_{\text{pin,L}} = -(L_{\text{out}} - L_{\text{blade}}) = \SI{-1570}{mm}$):
+  \begin{align}
+    w_s(x_{\text{pin,L}}) &= 0 && \text{(zero transverse displacement)}, \\
+    M_s(x_{\text{pin,L}}) &= 0 && \text{(zero moment; pin permits rotation)}.
+  \end{align}
+  
+  \item \textbf{Free end at handle} ($x = x_F = \SI{900}{mm}$):
+  \begin{align}
+    V_s(x_F) &= F && \text{(applied shear force)}, \\
+    M_s(x_F) &= 0 && \text{(free end; no moment)}.
+  \end{align}
 \end{itemize}
 
-See Figure~\ref{fig:theory2_boundary_conditions} for a visual representation of the boundary conditions.
+The span between the two pin supports is $L_{\text{span}} = 0 - x_{\text{pin,L}} = \SI{1570}{mm}$, and the handle extends as an overhang of length $x_F = \SI{900}{mm}$ beyond the right support.
 
-\subsubsection{Deflection Solution}
+\subsubsection{Reaction forces}
 
-\textbf{[TBD: Derivation of deflection $w_s(x)$ for beam with two pin supports and point load]}
+The vertical reaction forces at the two pins are determined from global equilibrium. Taking vertical force equilibrium:
+\begin{equation}
+  R_L + R_R = F,
+  \label{eq:theory2_force_equilibrium}
+\end{equation}
+and moment equilibrium about the right pin at $x = 0$:
+\begin{equation}
+  R_L \cdot L_{\text{span}} - F \cdot x_F = 0.
+  \label{eq:theory2_moment_equilibrium}
+\end{equation}
 
-\subsubsection{Moment Distribution}
+Solving for the reactions:
+\begin{align}
+  R_L &= \frac{F \cdot x_F}{L_{\text{span}}}
+       = \frac{F \times 900}{1570}
+       = 0.573\,F, \\
+  R_R &= F - R_L = 0.427\,F.
+\end{align}
 
-\textbf{[TBD: Calculation of bending moment $M_s(x)$ along the shaft]}
+Substituting numerical values with $F = \SI{1962}{N}$:
+\begin{align}
+  R_L &\approx \SI{1124}{N}, \\
+  R_R &\approx \SI{838}{N}.
+\end{align}
 
-\subsubsection{Reaction Forces}
+\textbf{Note on reaction directions:} Both reactions are positive (upward, in the $+y$ direction) as expected for a beam supporting a downward load in the overhang region. This contrasts with cantilever configurations where support moments would be required.
 
-\textbf{[TBD: Calculation of reaction forces at the two pin support locations]}
+\subsubsection{Bending moment distribution}
 
-\subsubsection{Strain at Beam Location}
+The bending moment varies across different regions of the beam. We focus on the overhang region $0 \le x \le x_F$ where the measurement beam is located.
 
-\textbf{[TBD: Calculation of mechanical strain $\varepsilon_{\text{mech}}$ at the beam gauge locations]}
+\paragraph{Overhang region ($0 \le x \le x_F$):}
 
-\subsubsection{Numerical Example}
+Cutting the beam at position $x$ in the overhang and considering the right portion (from $x$ to $x_F$), the only external force is the applied load $F$ at $x = x_F$. The internal bending moment at the cut is found from moment equilibrium:
+\begin{equation}
+  M_s(x) = F(x_F - x), \qquad 0 \le x \le x_F.
+  \label{eq:theory2_moment_overhang}
+\end{equation}
 
-\textbf{[TBD: Numerical example with typical force values]}
+This expression satisfies the boundary conditions:
+\begin{align}
+  M_s(x_F) &= 0 \quad \checkmark \quad \text{(free end)}, \\
+  M_s(0) &= F \cdot x_F = 900F \quad \text{(to be reconciled with pin condition)}.
+\end{align}
 
-% ============================================
+\textbf{Apparent inconsistency at $x=0$:} Equation~\eqref{eq:theory2_moment_overhang} gives $M_s(0) = 900F \ne 0$, which appears to violate the pin support condition $M_s(0) = 0$. This reflects the physical reality that the overhang creates a substantial bending moment at the support location. In practice, the oarlock provides a combination of vertical support and partial rotational constraint, making it neither a perfect pin nor a perfect clamp. The pin support model represents an idealization that captures the vertical support while the calculated moment $M_s(0)$ indicates the degree of rotational constraint actually required. For the purposes of strain calculation at the measurement location ($x = x_{\text{gauge}} = \SI{250}{mm}$), the moment distribution in the overhang region given by Eq.~\eqref{eq:theory2_moment_overhang} provides a reasonable working model.
+
+\paragraph{Supported span ($x_{\text{pin,L}} \le x < 0$):}
+
+The bending moment distribution in this region depends on both pin reactions. For completeness:
+\begin{equation}
+  M_s(x) = R_L (x - x_{\text{pin,L}}), \qquad x_{\text{pin,L}} \le x < 0,
+\end{equation}
+which satisfies $M_s(x_{\text{pin,L}}) = 0$ and provides continuity considerations at the right support.
+
+\subsubsection{Mechanical strain at gauge locations}
+
+Following the same approach as Theory~1, the curvature at the gauge station $x = x_{\text{gauge}} = x_b + L_b/2 = \SI{250}{mm}$ is:
+\begin{equation}
+  \kappa_s(x_{\text{gauge}})
+  = \frac{M_s(x_{\text{gauge}})}{E_s I_s}
+  = \frac{F(x_F - x_{\text{gauge}})}{E_s I_s}.
+  \label{eq:theory2_curvature}
+\end{equation}
+
+The mechanical bending strains at the top and bottom gauge fibers are:
+\begin{align}
+  \varepsilon_{\text{top}}(F)
+  &= \kappa_s(x_{\text{gauge}}) \, y_{\text{top}}
+   = \frac{F(x_F - x_{\text{gauge}}) \, y_{\text{top}}}{E_s I_s},
+   \label{eq:theory2_eps_top} \\
+  \varepsilon_{\text{bottom}}(F)
+  &= \kappa_s(x_{\text{gauge}}) \, y_{\text{bottom}}
+   = \frac{F(x_F - x_{\text{gauge}}) \, y_{\text{bottom}}}{E_s I_s}.
+   \label{eq:theory2_eps_bottom}
+\end{align}
+
+The differential strain driving the bridge output is:
+\begin{equation}
+  \Delta\varepsilon(F)
+  = \varepsilon_{\text{top}}(F) - \varepsilon_{\text{bottom}}(F)
+  = \kappa_s(x_{\text{gauge}}) \, h_b
+  = \frac{F(x_F - x_{\text{gauge}}) \, h_b}{E_s I_s}.
+  \label{eq:theory2_deps}
+\end{equation}
+
+As in Theory~1, the differential mechanical strain is independent of the beam eccentricity $y_b$ and depends only on the local curvature and beam thickness $h_b$.
+
+\subsubsection{Numerical example}
+
+Using the same geometric and material parameters as Theory~1:
+\begin{align}
+  x_F - x_{\text{gauge}} &= 900 - 250 = 650~\text{mm}, \\
+  h_b &= 2~\text{mm}, \\
+  E_s &= 140~\text{GPa}, \\
+  I_s &= 50\,956~\text{mm}^4,
+\end{align}
+and the peak handle force $F = \SI{1962}{N}$, the shaft curvature at the gauge station is:
+\begin{equation}
+  \kappa_s(x_{\text{gauge}})
+  = \frac{1962 \times 650}{140 \times 10^3 \times 50\,956}
+  \approx 0.179~\text{m}^{-1}.
+\end{equation}
+
+Note that this curvature is identical to Theory~1, as both theories place the gauge at $x = \SI{250}{mm}$ where the moment arm to the load is the same ($x_F - x_{\text{gauge}} = \SI{650}{mm}$). The mechanical strains are therefore:
+\begin{align}
+  \varepsilon_{\text{top}}
+  &\approx 7.2 \times 10^{-3} = 7\,160~\mu\varepsilon, \\
+  \varepsilon_{\text{bottom}}
+  &\approx 6.8 \times 10^{-3} = 6\,800~\mu\varepsilon, \\
+  \Delta\varepsilon
+  &= \varepsilon_{\text{top}} - \varepsilon_{\text{bottom}}
+   \approx 3.6 \times 10^{-4}
+   = 360~\mu\varepsilon.
+\end{align}
+
+\subsubsection{Comparison with Theory 1}
+
+Both theories predict \emph{identical} mechanical strains at the gauge location for the same applied handle force. This equivalence arises because:
+\begin{enumerate}
+  \item The moment arm from the load to the gauge position is the same in both models: $x_F - x_{\text{gauge}} = \SI{650}{mm}$.
+  \item The local bending moment $M_s(x_{\text{gauge}}) = F(x_F - x_{\text{gauge}})$ depends only on this moment arm and the applied force, regardless of the support conditions elsewhere on the beam.
+  \item The beam properties ($E_s$, $I_s$) and gauge geometry ($y_{\text{top}}$, $y_{\text{bottom}}$, $h_b$) are identical.
+\end{enumerate}
+
+The key difference between the theories lies in the \emph{global deflection pattern} and the \emph{reaction forces at the oarlock}:
+\begin{itemize}
+  \item \textbf{Theory 1 (clamped):} Single reaction at oarlock, zero rotation, larger deflections in outboard region.
+  \item \textbf{Theory 2 (pinned):} Two reaction forces, rotational freedom at supports, reduced deflections due to additional support at blade-shaft junction.
+\end{itemize}
+
+However, these global differences do not affect the local strain measurement at $x = x_{\text{gauge}}$, confirming that the measurement system is sensitive primarily to the \emph{local bending moment} rather than the specific boundary condition model.

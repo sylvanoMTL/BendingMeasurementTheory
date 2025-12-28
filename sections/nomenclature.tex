@@ -47,6 +47,8 @@ $e_b$ & Beam eccentricity from shaft centerline & mm \\
 $y_b$ & Beam neutral axis position & mm \\
 $x_b$ & Beam root position & mm \\
 $x_F$ & Handle end position (force application) & mm \\
+$x_{\text{pin,L}}$ & Left pin support position (Theory 2) & mm \\
+$L_{\text{span}}$ & Span between pin supports (Theory 2) & mm \\
 $\phi_{\text{mis}}$ & System misalignment angle around shaft & deg or rad \\
 $\phi_0$ & Initial beam twist (relative clamp rotation) & deg or rad \\
 \bottomrule
@@ -71,6 +73,25 @@ $I_b$ & Second moment of area of beam & mm$^4$ \\
 $\varepsilon_{\text{mech}}(x,y)$ & Mechanical bending strain at position $(x,y)$ & -- \\
 $\varepsilon(x,y)$ & Strain at position $(x,y)$ (when context is clear) & -- \\
 $\sigma(x,y)$ & Stress at position $(x,y)$ & MPa \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Nomenclature - Forces and reactions}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units} \\
+\midrule
+$F$ & Applied force at handle & N \\
+$V_s(x)$ & Shear force in shaft at position $x$ & N \\
+$M_s(x)$ & Bending moment in shaft at position $x$ & N·mm \\
+$R_L$ & Reaction force at left pin support (Theory 2) & N \\
+$R_R$ & Reaction force at right pin support (Theory 2) & N \\
+$N_{\text{th}}$ & Axial thermal load in beam & N \\
+$N_{\text{assy}}$ & Assembly pre-stress load & N \\
+$N_{\text{cr}}$ & Critical buckling load & N \\
 \bottomrule
 \end{tabular}
 \end{table}
