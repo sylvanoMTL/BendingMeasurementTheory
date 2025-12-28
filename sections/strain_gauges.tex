@@ -29,42 +29,49 @@ x_{\text{gauge}} = x_b + \frac{L_b}{2}
 
 \subsection{Bridge Configuration}
 
-The four strain gauges form a full Wheatstone bridge with two active half-bridges in opposition:
+During the drive phase, the rower applies a horizontal force at the handle in the $-y$ direction. This creates a bending moment that makes the measurement beam \emph{convex toward $+y$}. In this condition, the top surface is in tension and the bottom surface is in compression.
 
+The four strain gauges form a full Wheatstone bridge configured for differential bending measurement:
 \begin{itemize}
-    \item \textbf{$R_1$ \& $R_2$ (Top surface):} Located at $y = y_{\text{top}}$, $x = x_{\text{gauge}}$
+    \item \textbf{$R_1$ \& $R_3$ (Top surface):} located at $y = y_{\text{top}}$, $x = x_{\text{gauge}}$
     \begin{itemize}
-        \item Experience \textbf{positive strain} (tension) when beam bends due to downward force at handle
+        \item Experience \textbf{positive strain} (tension) during the drive phase.
     \end{itemize}
-    \item \textbf{$R_3$ \& $R_4$ (Bottom surface):} Located at $y = y_{\text{bottom}}$, $x = x_{\text{gauge}}$
+    \item \textbf{$R_2$ \& $R_4$ (Bottom surface):} located at $y = y_{\text{bottom}}$, $x = x_{\text{gauge}}$
     \begin{itemize}
-        \item Experience \textbf{negative strain} (compression) under same bending condition
+        \item Experience \textbf{negative strain} (compression) during the drive phase.
     \end{itemize}
 \end{itemize}
 
-The bridge is wired as follows:
+To ensure sensitivity to bending while rejecting common-mode strain (e.g., uniform axial or thermal strain),
+each half-bridge contains one top and one bottom gauge:
 \begin{itemize}
-    \item $R_1$ and $R_2$ in one voltage divider (top surface gauges)
-    \item $R_3$ and $R_4$ in the other voltage divider (bottom surface gauges)
+    \item Left voltage divider: $R_1$ (top) over $R_2$ (bottom)
+    \item Right voltage divider: $R_3$ (bottom) over $R_4$ (top)
 \end{itemize}
 
 The bridge output voltage is:
 \begin{equation}
-V_{\text{out}} = V_{\text{ex}} \left(\frac{R_2}{R_1 + R_2} - \frac{R_4}{R_3 + R_4}\right)
+V_{\text{out}} = V_{\text{ex}} \left(
+    \frac{R_2}{R_1 + R_2}
+    - \frac{R_4}{R_3 + R_4}
+\right)
 \label{eq:bridge_basic}
 \end{equation}
 
-Substituting the strain-dependent resistances:
+with strain-dependent resistances:
 \begin{align}
-R_1 &= R_g(1 + GF \cdot \varepsilon_{\text{top}}) \\
-R_2 &= R_g(1 + GF \cdot \varepsilon_{\text{top}}) \\
-R_3 &= R_g(1 + GF \cdot \varepsilon_{\text{bottom}}) \\
-R_4 &= R_g(1 + GF \cdot \varepsilon_{\text{bottom}})
+R_1 &= R_g \bigl(1 + GF \cdot \varepsilon_{\text{top}}\bigr) \\
+R_2 &= R_g \bigl(1 + GF \cdot \varepsilon_{\text{bottom}}\bigr) \\
+R_3 &= R_g \bigl(1 + GF \cdot \varepsilon_{\text{bottom}}\bigr) \\
+R_4 &= R_g \bigl(1 + GF \cdot \varepsilon_{\text{top}}\bigr)
 \end{align}
 
-For small strains ($GF \cdot \varepsilon \ll 1$), this simplifies to:
+For small strains ($GF \cdot \varepsilon \ll 1$), this simplifies to the familiar linearized form:
 \begin{equation}
-\frac{V_{\text{out}}}{V_{\text{ex}}} = \frac{GF}{2}
+\frac{V_{\text{out}}}{V_{\text{ex}}}
+=
+\frac{GF}{2}
 \left(\varepsilon_{\text{top}} - \varepsilon_{\text{bottom}}\right)
 \label{eq:bridge_output}
 \end{equation}
@@ -72,26 +79,27 @@ For small strains ($GF \cdot \varepsilon \ll 1$), this simplifies to:
 where:
 \begin{itemize}
     \item $V_{\text{out}}$ = bridge output voltage
-    \item $V_{\text{ex}}$ = bridge excitation voltage = \SI{3.3}{V}
-    \item $\varepsilon_{\text{top}}$ = average strain on top surface (gauges $R_1$ \& $R_2$)
-    \item $\varepsilon_{\text{bottom}}$ = average strain on bottom surface (gauges $R_3$ \& $R_4$)
+    \item $V_{\text{ex}}$ = bridge excitation voltage (here \SI{3.3}{V})
+    \item $\varepsilon_{\text{top}}$ = average strain on top surface (gauges $R_1$ \& $R_3$)
+    \item $\varepsilon_{\text{bottom}}$ = average strain on bottom surface (gauges $R_2$ \& $R_4$)
 \end{itemize}
 
-Unless otherwise stated, $\varepsilon_{\text{top}}$ and $\varepsilon_{\text{bottom}}$ are understood to be the \emph{total} axial strains at the corresponding gauge locations. In terms of the decomposition introduced in Eq.~\eqref{eq:strain_decomposition}, they correspond to $\varepsilon_{\text{total}}(T,F)$ evaluated at $y = y_{\text{top}}$ and $y = y_{\text{bottom}}$, respectively.
-
-\textbf{Strain signs during bending:} When the handle force produces downward bending:
+\textbf{Drive-phase sign convention:}
 \begin{itemize}
     \item $\varepsilon_{\text{top}} > 0$ (tension)
     \item $\varepsilon_{\text{bottom}} < 0$ (compression)
+    \item $V_{\text{out}} > 0$ indicates bending consistent with the drive-phase loading.
 \end{itemize}
+
+Unless otherwise stated, $\varepsilon_{\text{top}}$ and $\varepsilon_{\text{bottom}}$ are understood to be the \emph{total} axial strains at the corresponding gauge locations. In terms of the decomposition introduced in Eq.~\eqref{eq:strain_decomposition}, they correspond to $\varepsilon_{\text{total}}(T,F)$ evaluated at $y = y_{\text{top}}$ and $y = y_{\text{bottom}}$, respectively.
+Positive bridge output therefore corresponds directly to positive drive-phase force.
+
 
 \subsection{Expected Strain Range}
 
 Based on preliminary beam theory estimates (see Section~\ref{sec:beam_bending_theory}), the expected mechanical strain range at the gauge locations is on the order of:
 \begin{itemize}
-    \item $\varepsilon_{\text{mech}} \in [\SI{-500}{\microstrain}, \SI{+500}{\microstrain}]$ for typical rowing forces.
+    \item $\varepsilon_{\text{mech}} \in [\SI{-500}{\microstrain}, \SI{+500}{\microstrain}]$ for typical rowing forces during the drive phase.
 \end{itemize}
 
 Thermal and offset contributions $\varepsilon_{\text{th}}(T)$ and $\varepsilon_{\text{off}}(T)$ may add bias and apparent gain variations, as discussed in Section~\ref{sec:thermal_amplification}.
-
-% ============================================
